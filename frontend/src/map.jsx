@@ -112,6 +112,33 @@ function ParkingMarker({ parking, onClick }) {
   );
 }
 
+function EditDotMarker({ point, index }) {
+  const ymaps = useYMaps(['templateLayoutFactory']);
+  const layout = useMemo(() => {
+    if (!ymaps?.templateLayoutFactory) return null;
+    return ymaps.templateLayoutFactory.createClass(
+      `<div style="width:20px;height:20px;background:#6366f1;border:2px solid #fff;border-radius:50%;` +
+      `transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;` +
+      `font-size:9px;font-weight:700;color:#fff;box-shadow:0 1px 4px rgba(0,0,0,.5);cursor:default">${index + 1}</div>`
+    );
+  }, [ymaps, index]);
+
+  if (!layout) return null;
+
+  return (
+    <Placemark
+      geometry={point}
+      options={{
+        iconLayout: layout,
+        iconShape: { type: 'Circle', coordinates: [0, 0], radius: 10 },
+        openBalloonOnClick: false,
+        zIndex: 60,
+      }}
+      properties={{ hintContent: `Точка ${index + 1}: [${point[0].toFixed(6)}, ${point[1].toFixed(6)}]` }}
+    />
+  );
+}
+
 export default function MapPage() {
   const mapRef = useRef(null);
   const [dark, setDark] = useState(false);
@@ -121,6 +148,7 @@ export default function MapPage() {
   const [panel, setPanel] = useState(null);
   const [showLanes, setShowLanes] = useState(false);
   const [vehicleCounts, setVehicleCounts] = useState({});
+  const [polyEdit, setPolyEdit] = useState(null); // null | { roadId, points: [[lat,lng],...] }
 
   useEffect(() => {
     Promise.all([
@@ -137,6 +165,33 @@ export default function MapPage() {
       setVehicleCounts(counts);
     }).catch(console.error);
   }, []);
+
+  // ── Polygon editor ─────────────────────────────────────────────────────────
+  const addPolyPoint = (e) => {
+    if (!polyEdit) return;
+    const coords = e.get('coords');
+    setPolyEdit(prev => prev ? { ...prev, points: [...prev.points, coords] } : null);
+  };
+
+  const startPolyEdit = (roadId) => setPolyEdit({ roadId, points: [] });
+
+  const undoPolyEdit = () =>
+    setPolyEdit(prev => prev ? { ...prev, points: prev.points.slice(0, -1) } : null);
+
+  const cancelPolyEdit = () => setPolyEdit(null);
+
+  const finishPolyEdit = () => {
+    const pts = polyEdit?.points ?? [];
+    if (pts.length >= 3) {
+      console.log(`%c[Полигон участка id=${polyEdit.roadId}]`, 'color:#6366f1;font-weight:bold;font-size:13px');
+      console.log('"polygon": [');
+      pts.forEach(([lat, lng]) => console.log(`    [${lat.toFixed(6)}, ${lng.toFixed(6)}],`));
+      console.log('],');
+      console.log('\nJSON:', JSON.stringify(pts));
+    }
+    setPolyEdit(null);
+  };
+  // ──────────────────────────────────────────────────────────────────────────
 
   const flyToRoad = (id) => {
     const road = roads.find(r => r.id === id);
@@ -171,6 +226,8 @@ export default function MapPage() {
     setPanel({ type: 'fleet', data: { vehicles: data, typeName, typeIcon } });
   };
 
+  const closePanel = () => { setPanel(null); cancelPolyEdit(); };
+
   return (
     <div
       className="flex h-screen w-screen overflow-hidden"
@@ -196,6 +253,7 @@ export default function MapPage() {
             style={{ width: '100%', height: '100%' }}
             options={{ suppressMapOpenBlock: true }}
             instanceRef={mapRef}
+            onClick={addPolyPoint}
           >
             {/* Road polygons + label markers */}
             {roads.map(r => {
@@ -213,32 +271,64 @@ export default function MapPage() {
                     zIndex: isActive ? 10 : 1,
                   }}
                   properties={{ hintContent: r.name }}
-                  onClick={() => openRoad(r.id)}
+                  onClick={(e) => polyEdit ? addPolyPoint(e) : openRoad(r.id)}
                 />,
                 <RoadLabel
                   key={`road-label-${r.id}`}
                   road={r}
                   isActive={isActive}
-                  onClick={() => openRoad(r.id)}
+                  onClick={(e) => polyEdit ? addPolyPoint(e) : openRoad(r.id)}
                 />,
               ];
             })}
 
-            {/* Factory markers — emoji icon + label + optional vehicle count badge */}
+            {/* Factory markers */}
             {factories.map(f => (
-              <FactoryMarker key={`factory-${f.id}`} factory={f} onClick={() => openFactory(f.id)} />
+              <FactoryMarker
+                key={`factory-${f.id}`}
+                factory={f}
+                onClick={(e) => polyEdit ? addPolyPoint(e) : openFactory(f.id)}
+              />
             ))}
 
-            {/* Parking markers — emoji icon + label + vehicle count badge */}
+            {/* Parking markers */}
             {parkings.map(p => (
               <ParkingMarker
                 key={`parking-${p.id}`}
                 parking={p}
-                onClick={() => openParking(p.id)}
+                onClick={(e) => polyEdit ? addPolyPoint(e) : openParking(p.id)}
               />
+            ))}
+
+            {/* Polygon editor — preview */}
+            {polyEdit?.points.length >= 3 && (
+              <Polygon
+                geometry={[polyEdit.points]}
+                options={{
+                  fillColor: '#6366f1',
+                  fillOpacity: 0.2,
+                  strokeColor: '#6366f1',
+                  strokeWidth: 2,
+                  strokeStyle: 'dash',
+                  openBalloonOnClick: false,
+                  zIndex: 50,
+                }}
+              />
+            )}
+            {polyEdit?.points.map((pt, i) => (
+              <EditDotMarker key={`edit-pt-${i}`} point={pt} index={i} />
             ))}
           </Map>
         </YMaps>
+
+        {/* Edit mode banner */}
+        {polyEdit && (
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 z-20 bg-indigo-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg pointer-events-none flex items-center gap-2 whitespace-nowrap">
+            <span>✏️</span>
+            <span>Режим редактирования полигона — кликайте на карту</span>
+            <span className="bg-white/20 px-2 py-0.5 rounded-full">{polyEdit.points.length} точек</span>
+          </div>
+        )}
 
         {showLanes && (
           <LineInformation onClose={() => setShowLanes(false)} />
@@ -248,7 +338,12 @@ export default function MapPage() {
           <PanelRoad
             road={panel.data}
             dark={dark}
-            onClose={() => setPanel(null)}
+            onClose={closePanel}
+            polyEdit={polyEdit?.roadId === panel.data?.id ? polyEdit : null}
+            onStartPolyEdit={() => startPolyEdit(panel.data.id)}
+            onUndoPolyEdit={undoPolyEdit}
+            onFinishPolyEdit={finishPolyEdit}
+            onCancelPolyEdit={cancelPolyEdit}
           />
         )}
 

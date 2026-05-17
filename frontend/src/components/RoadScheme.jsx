@@ -34,16 +34,16 @@ function LaneStrip({ lane, isSelected, onClick, arrow }) {
 }
 
 export default function RoadScheme({ lanes, selectedLane, onSelectLane }) {
-  const msk = lanes.filter(l => l.direction === 'На Москву');
-  const spb = lanes.filter(l => l.direction === 'На Санкт-Петербург');
+  const msk = lanes.filter(l => l.direction === 'На Санкт-Петербург');
+  const spb = lanes.filter(l => l.direction === 'На Москву');
 
   return (
     <div className="rounded-xl overflow-hidden border border-gray-600 select-none">
 
       {/* Moscow direction — top */}
       <div className="bg-gray-900 px-3 py-2 flex items-center justify-between">
-        <span className="text-xs font-bold text-orange-400 uppercase tracking-wider">На Москву</span>
-        <span className="text-orange-400/50 text-xs tracking-widest font-mono">→ → →</span>
+        <span className="text-xs font-bold text-orange-400 uppercase tracking-wider">На Санкт-Петербург</span>
+        <span className="text-orange-400/50 text-xs tracking-widest font-mono">← ← ←</span>
       </div>
 
       <div className="bg-gray-800 divide-y divide-white/5">
@@ -51,7 +51,7 @@ export default function RoadScheme({ lanes, selectedLane, onSelectLane }) {
           <LaneStrip
             key={lane.id}
             lane={lane}
-            arrow="→"
+            arrow="←"
             isSelected={selectedLane?.id === lane.id}
             onClick={() => onSelectLane(lane)}
           />
@@ -78,7 +78,7 @@ export default function RoadScheme({ lanes, selectedLane, onSelectLane }) {
           <LaneStrip
             key={lane.id}
             lane={lane}
-            arrow="←"
+            arrow="→"
             isSelected={selectedLane?.id === lane.id}
             onClick={() => onSelectLane(lane)}
           />
@@ -87,8 +87,8 @@ export default function RoadScheme({ lanes, selectedLane, onSelectLane }) {
 
       {/* SPb direction — bottom */}
       <div className="bg-gray-900 px-3 py-2 flex items-center justify-between">
-        <span className="text-blue-400/50 text-xs tracking-widest font-mono">← ← ←</span>
-        <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">На Санкт-Петербург</span>
+        <span className="text-blue-400/50 text-xs tracking-widest font-mono">→ → →</span>
+        <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">На Москву</span>
       </div>
     </div>
   );
