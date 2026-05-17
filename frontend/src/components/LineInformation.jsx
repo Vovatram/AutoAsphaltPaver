@@ -242,7 +242,7 @@ export default function LineInformation({ onClose }) {
               );
             })}
             <span className="ml-auto flex items-center gap-1">
-              Доступно для ремонта: <strong className="text-green-700">{lanes.filter(l => l.weather_suitable).length}</strong>
+              Доступно для ремонта: <strong className="text-green-700">{lanes.filter(l => l.weather_windows?.length > 0).length}</strong>
             </span>
           </div>
         )}
