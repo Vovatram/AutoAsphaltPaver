@@ -46,8 +46,11 @@ function sortLanes(lanes, key, dir) {
       va = new Date(a.last_paved).getTime();
       vb = new Date(b.last_paved).getTime();
     } else if (key === 'weather_suitable') {
-      va = a.weather_suitable ? 1 : 0;
-      vb = b.weather_suitable ? 1 : 0;
+      va = a.weather_windows?.length ?? 0;
+      vb = b.weather_windows?.length ?? 0;
+    } else if (key === 'name') {
+      va = `${(a.road_name ?? '').toLowerCase()}\x00${(a.name ?? '').toLowerCase()}`;
+      vb = `${(b.road_name ?? '').toLowerCase()}\x00${(b.name ?? '').toLowerCase()}`;
     } else {
       va = (a[key] ?? '').toLowerCase();
       vb = (b[key] ?? '').toLowerCase();
