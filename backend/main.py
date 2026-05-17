@@ -338,6 +338,13 @@ def get_parking(parking_id: int):
     return parking
 
 
+@app.get("/api/vehicles")
+def get_all_vehicles(type: str = None):
+    print(f"GET /api/vehicles type={type}")
+    result = _ALL_VEHICLES if not type else [v for v in _ALL_VEHICLES if v["type"] == type]
+    return result
+
+
 @app.get("/api/vehicles/{vehicle_id}")
 def get_vehicle(vehicle_id: int):
     print(f"GET /api/vehicles/{vehicle_id}")
