@@ -140,21 +140,25 @@ export default function MapPage() {
             instanceRef={mapRef}
           >
             {/* Road polygons */}
-            {roads.map(r => (
-              <Polygon
-                key={`road-${r.id}`}
-                geometry={[r.polygon]}
-                options={{
-                  fillColor: '#f97316',
-                  strokeColor: '#c2410c',
-                  fillOpacity: 0.55,
-                  strokeWidth: 2,
-                  openBalloonOnClick: false,
-                }}
-                properties={{ hintContent: r.name }}
-                onClick={() => openRoad(r.id)}
-              />
-            ))}
+            {roads.map(r => {
+              const isActive = panel?.type === 'road' && panel.data?.id === r.id;
+              return (
+                <Polygon
+                  key={`road-${r.id}`}
+                  geometry={[r.polygon]}
+                  options={{
+                    fillColor: isActive ? '#ea580c' : '#f97316',
+                    strokeColor: isActive ? '#7c2d12' : '#c2410c',
+                    fillOpacity: isActive ? 0.85 : 0.55,
+                    strokeWidth: isActive ? 4 : 2,
+                    openBalloonOnClick: false,
+                    zIndex: isActive ? 10 : 1,
+                  }}
+                  properties={{ hintContent: r.name }}
+                  onClick={() => openRoad(r.id)}
+                />
+              );
+            })}
 
             {/* Factory markers — emoji icon + label + optional vehicle count badge */}
             {factories.map(f => (
