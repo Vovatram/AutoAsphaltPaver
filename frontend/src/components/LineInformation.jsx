@@ -148,7 +148,7 @@ export default function LineInformation({ onClose }) {
               <tbody>
                 {displayed.length === 0 && (
                   <tr>
-                    <td colSpan={5} className="py-12 text-center text-gray-400">Ничего не найдено</td>
+                    <td colSpan={6} className="py-12 text-center text-gray-400">Ничего не найдено</td>
                   </tr>
                 )}
                 {displayed.map((lane, i) => {
