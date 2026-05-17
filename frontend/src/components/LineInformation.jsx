@@ -205,7 +205,7 @@ export default function LineInformation({ onClose }) {
                         {lane.weather_windows?.length > 0 ? (
                           <button
                             onClick={() => setPlanTarget({
-                              road: { id: lane.road_id, name: lane.road_name, repair_hours: lane.repair_hours },
+                              road: { id: lane.road_id, name: lane.road_name, repair_hours: lane.repair_hours, weather_windows: lane.weather_windows ?? [] },
                               lane: { id: lane.id, name: lane.name },
                             })}
                             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white text-xs font-semibold transition-colors whitespace-nowrap"
