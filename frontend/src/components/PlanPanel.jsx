@@ -58,6 +58,13 @@ export default function PlanPanel({ road, lane, onClose, onDone }) {
   const [selected, setSelected] = useState({
     dump_truck: [], transfer_machine: [], paver: [], roller: [], closure_vehicle: [],
   });
+  const [selectedWindow, setSelectedWindow] = useState(null);
+
+  const windows = road.weather_windows ?? [];
+
+  useEffect(() => {
+    if (windows.length === 1) setSelectedWindow(windows[0]);
+  }, []);
 
   useEffect(() => {
     Promise.all([
@@ -89,6 +96,7 @@ export default function PlanPanel({ road, lane, onClose, onDone }) {
   const removeVehicle = (type, id) => setSelected(s => ({ ...s, [type]: s[type].filter(v => v.id !== id) }));
 
   const totalSelected = Object.values(selected).reduce((n, arr) => n + arr.length, 0);
+  const canSubmit = !loading && totalSelected > 0 && (windows.length === 0 || selectedWindow !== null);
 
   return (
     <div className="absolute inset-0 z-30 bg-black/50 flex items-center justify-center p-4">
@@ -107,47 +115,84 @@ export default function PlanPanel({ road, lane, onClose, onDone }) {
         </div>
 
         {/* Body */}
-        <div className="overflow-y-auto flex-1 px-5 py-4">
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-            Состав техники
-          </p>
+        <div className="overflow-y-auto flex-1 px-5 py-4 space-y-4">
 
-          {loading ? (
-            <div className="py-10 text-center text-gray-400 text-sm">Расчёт оптимального состава...</div>
-          ) : (
-            <div className="space-y-3">
-              {VEHICLE_TYPES.map(({ type, icon, label }) => (
-                <div key={type} className="rounded-xl bg-gray-50 border border-gray-100 p-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-lg shrink-0">{icon}</span>
-                    <div className="min-w-0">
-                      <p className="text-xs font-semibold text-gray-800 leading-tight truncate">{label}</p>
-                      <p className="text-xs text-gray-400">
-                        {selected[type].length > 0 ? `${selected[type].length} ед. выбрано` : 'не выбрано'}
-                      </p>
-                    </div>
-                  </div>
-                  <VehicleSelector
-                    vehicleType={type}
-                    allVehicles={allVehicles}
-                    selected={selected[type]}
-                    onAdd={v => addVehicle(type, v)}
-                    onRemove={id => removeVehicle(type, id)}
-                  />
-                </div>
-              ))}
+          {/* Window selector */}
+          {windows.length > 0 && (
+            <div>
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                Рабочее окно
+              </p>
+              <div className="flex flex-col gap-1.5">
+                {windows.map((w, i) => {
+                  const active = selectedWindow === w;
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => setSelectedWindow(w)}
+                      className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl border text-sm font-semibold transition-colors ${
+                        active
+                          ? 'bg-green-500 border-green-500 text-white shadow-sm'
+                          : 'bg-green-50 border-green-200 text-green-800 hover:bg-green-100'
+                      }`}
+                    >
+                      <span className={`w-2 h-2 rounded-full shrink-0 ${active ? 'bg-white' : 'bg-green-500'}`} />
+                      {w}
+                      {active && <span className="ml-auto text-white text-base leading-none">✓</span>}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           )}
+
+          {/* Vehicle types */}
+          <div>
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+              Состав техники
+            </p>
+
+            {loading ? (
+              <div className="py-10 text-center text-gray-400 text-sm">Расчёт оптимального состава...</div>
+            ) : (
+              <div className="space-y-3">
+                {VEHICLE_TYPES.map(({ type, icon, label }) => (
+                  <div key={type} className="rounded-xl bg-gray-50 border border-gray-100 p-3">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-lg shrink-0">{icon}</span>
+                      <div className="min-w-0">
+                        <p className="text-xs font-semibold text-gray-800 leading-tight truncate">{label}</p>
+                        <p className="text-xs text-gray-400">
+                          {selected[type].length > 0 ? `${selected[type].length} ед. выбрано` : 'не выбрано'}
+                        </p>
+                      </div>
+                    </div>
+                    <VehicleSelector
+                      vehicleType={type}
+                      allVehicles={allVehicles}
+                      selected={selected[type]}
+                      onAdd={v => addVehicle(type, v)}
+                      onRemove={id => removeVehicle(type, id)}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Footer */}
         <div className="px-5 pb-5 pt-2 shrink-0 border-t border-gray-100">
+          {windows.length > 0 && !selectedWindow && (
+            <p className="text-xs text-amber-600 text-center mb-2 mt-2">Выберите рабочее окно</p>
+          )}
           <p className="text-xs text-gray-400 text-center mb-3 mt-2">
             Итого выбрано: <strong className="text-gray-800">{totalSelected} ед.</strong>
+            {selectedWindow && <span className="ml-2 text-green-700 font-semibold">· {selectedWindow}</span>}
           </p>
           <button
-            onClick={() => onDone(selected)}
-            disabled={loading || totalSelected === 0}
+            onClick={() => onDone({ vehicles: selected, window: selectedWindow })}
+            disabled={!canSubmit}
             className="w-full py-3 rounded-xl bg-orange-500 hover:bg-orange-600 disabled:opacity-40 text-white font-bold text-sm transition-colors flex items-center justify-center gap-2"
           >
             <span>✅</span>
