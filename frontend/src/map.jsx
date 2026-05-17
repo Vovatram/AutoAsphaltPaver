@@ -59,7 +59,7 @@ function RoadLabel({ road, isActive, onClick }) {
   );
 }
 
-function FactoryMarker({ factory }) {
+function FactoryMarker({ factory, onClick }) {
   const ymaps = useYMaps(['templateLayoutFactory']);
 
   const layout = useMemo(() => {
