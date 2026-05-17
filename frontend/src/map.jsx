@@ -153,6 +153,16 @@ export default function MapPage() {
     setPanel({ type: 'vehicle', data });
   };
 
+  const openFactory = async (id) => {
+    const { data } = await axios.get(`${API}/factories/${id}`);
+    setPanel({ type: 'factory', data });
+  };
+
+  const openVehicleType = async (type, typeName, typeIcon) => {
+    const { data } = await axios.get(`${API}/vehicles`, { params: { type } });
+    setPanel({ type: 'fleet', data: { vehicles: data, typeName, typeIcon } });
+  };
+
   return (
     <div
       className="flex h-screen w-screen overflow-hidden"
