@@ -112,6 +112,7 @@ ROADS = [
         ],
         "weather_suitable": True,
         "weather_note": "Температура +12°C, без осадков — ремонт возможен",
+        "weather_windows": ["08:00–11:00", "15:00–18:00"],
         "repair_hours": 60,
     },
 ]
