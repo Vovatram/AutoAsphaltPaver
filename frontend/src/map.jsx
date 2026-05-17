@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { YMaps, Map, Placemark, Polygon, useYMaps } from '@pbe/react-yandex-maps';
 import axios from 'axios';
 import LeftPanel from './components/LeftPanel.jsx';
