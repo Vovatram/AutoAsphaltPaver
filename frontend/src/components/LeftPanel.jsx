@@ -168,10 +168,17 @@ export default function LeftPanel({ dark, onToggleDark, roads, parkings, onSelec
               <button
                 key={road.id}
                 onClick={() => onSelectRoad(road.id)}
-                className="text-left px-3 py-2 rounded-lg bg-slate-700 hover:bg-orange-600 text-sm transition-colors w-full flex items-center gap-2"
+                className={`text-left px-3 py-2 rounded-lg text-sm transition-colors w-full flex items-center gap-2 ${
+                  activeRoadId === road.id
+                    ? 'bg-orange-500 text-white'
+                    : 'bg-slate-700 hover:bg-orange-600'
+                }`}
               >
                 <span>🛣️</span>
                 <span className="truncate">{road.name}</span>
+                {activeRoadId === road.id && (
+                  <span className="ml-auto shrink-0 text-xs bg-white/20 px-1.5 py-0.5 rounded">●</span>
+                )}
               </button>
             ))}
           </div>
