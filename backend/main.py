@@ -300,7 +300,19 @@ def get_road(road_id: int):
 @app.get("/api/factories")
 def get_factories():
     print("GET /api/factories")
-    return FACTORIES
+    return [
+        {k: v for k, v in f.items() if k != "vehicles"}
+        for f in FACTORIES
+    ]
+
+
+@app.get("/api/factories/{factory_id}")
+def get_factory(factory_id: int):
+    print(f"GET /api/factories/{factory_id}")
+    factory = next((f for f in FACTORIES if f["id"] == factory_id), None)
+    if not factory:
+        raise HTTPException(status_code=404, detail="Factory not found")
+    return factory
 
 
 @app.get("/api/parkings")
