@@ -119,6 +119,7 @@ export default function MapPage() {
   const [factories, setFactories] = useState([]);
   const [parkings, setParkings] = useState([]);
   const [panel, setPanel] = useState(null);
+  const [showLanes, setShowLanes] = useState(false);
 
   useEffect(() => {
     Promise.all([
