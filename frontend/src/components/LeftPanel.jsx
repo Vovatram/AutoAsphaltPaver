@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 const VEHICLE_FLEET = [
-  { type: 'dump_truck',       icon: '🚛', label: 'Автомобили-самосвалы',               count: 'по расчёту' },
-  { type: 'transfer_machine', icon: '🏗️', label: 'Перегружатель смеси',                count: '1' },
-  { type: 'paver',            icon: '🚜', label: 'Асфальтоукладчик (гусеничный)',       count: '1' },
-  { type: 'roller',           icon: '🛞', label: 'Каток гладковальцовый',              count: '1' },
-  { type: 'closure_vehicle',  icon: '🚧', label: 'Спецавтомобиль перекрытия дороги',   count: '1' },
+  { type: 'dump_truck',       icon: '🚛', label: 'Автомобили-самосвалы' },
+  { type: 'transfer_machine', icon: '🏗️', label: 'Перегружатель смеси' },
+  { type: 'paver',            icon: '🚜', label: 'Асфальтоукладчик (гусеничный)' },
+  { type: 'roller',           icon: '🛞', label: 'Каток гладковальцовый' },
+  { type: 'closure_vehicle',  icon: '🚧', label: 'Спецавтомобиль перекрытия дороги' },
 ];
 
 export default function LeftPanel({ dark, onToggleDark, roads, parkings, onSelectRoad, onSelectParking, onSelectVehicleType, onShowLanes, activeRoadId }) {
