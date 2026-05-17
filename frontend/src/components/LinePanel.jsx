@@ -73,21 +73,35 @@ export default function LinePanel({ lane, road, onClose, onStartPlan }) {
           </div>
 
           {/* Weather */}
-          <div className={`rounded-xl p-3.5 border ${road.weather_suitable ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+          <div className={`rounded-xl p-3.5 border ${road.weather_windows?.length > 0 ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">
-              Погодные условия
+              Окна для укладки
             </p>
-            <div className="flex items-center gap-2">
-              <span className="text-lg">{road.weather_suitable ? '✅' : '⛔'}</span>
-              <p className={`text-sm font-semibold ${road.weather_suitable ? 'text-green-700' : 'text-red-700'}`}>
-                {road.weather_suitable ? 'Укладка возможна' : 'Укладка не рекомендуется'}
-              </p>
-            </div>
-            <p className="text-xs text-gray-600 mt-1">{road.weather_note}</p>
+            {road.weather_windows?.length > 0 ? (
+              <>
+                <div className="flex flex-wrap gap-1.5 mb-2">
+                  {road.weather_windows.map((w, i) => (
+                    <span key={i} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200 whitespace-nowrap">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0" />
+                      {w}
+                    </span>
+                  ))}
+                </div>
+                <p className="text-xs text-gray-600">{road.weather_note}</p>
+              </>
+            ) : (
+              <>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-lg">⛔</span>
+                  <p className="text-sm font-semibold text-red-700">Нет окон для укладки</p>
+                </div>
+                <p className="text-xs text-gray-600">{road.weather_note}</p>
+              </>
+            )}
           </div>
 
           {/* Action */}
-          {road.weather_suitable && (
+          {road.weather_windows?.length > 0 && (
             <button
               onClick={onStartPlan}
               className="w-full py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm transition-colors flex items-center justify-center gap-2"
