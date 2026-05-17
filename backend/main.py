@@ -115,8 +115,10 @@ ROADS = [
         ],
         "photo": "https://cdn.discordapp.com/attachments/1440751646526275725/1505657484998869186/5.png?ex=6a0b6c4e&is=6a0a1ace&hm=24c58fb98cf60b66b9c8883e18497ed70592671d7b7f1df4b9f6fa673f0745ba&",
         "lanes": [
-            {"id": 1, "name": "Полоса 1", "condition": "Удовлетворительное", "last_paved": "2022-11-01"},
-            {"id": 2, "name": "Полоса 2", "condition": "Хорошее",            "last_paved": "2024-03-20"},
+            {"id": 1, "name": "Полоса 1", "direction": "На Москву",          "condition": "Удовлетворительное", "last_paved": "2022-11-01"},
+            {"id": 2, "name": "Полоса 2", "direction": "На Москву",          "condition": "Плохое",             "last_paved": "2020-11-05"},
+            {"id": 3, "name": "Полоса 3", "direction": "На Санкт-Петербург", "condition": "Хорошее",            "last_paved": "2024-03-20"},
+            {"id": 4, "name": "Полоса 4", "direction": "На Санкт-Петербург", "condition": "Хорошее",            "last_paved": "2023-09-15"},
         ],
         "weather_suitable": True,
         "weather_note": "Температура +12°C, без осадков — ремонт возможен",
