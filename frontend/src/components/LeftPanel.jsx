@@ -8,7 +8,7 @@ const VEHICLE_FLEET = [
   { type: 'closure_vehicle',  icon: '🚧', label: 'Спецавтомобиль перекрытия дороги',   count: '1' },
 ];
 
-export default function LeftPanel({ dark, onToggleDark, roads, parkings, onSelectRoad, onSelectParking, onSelectVehicleType, activeRoadId }) {
+export default function LeftPanel({ dark, onToggleDark, roads, parkings, onSelectRoad, onSelectParking, onSelectVehicleType, onShowLanes, activeRoadId }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [mode, setMode] = useState(null); // null | 'login' | 'register'
   const [loginData, setLoginData] = useState({ username: '', password: '' });
