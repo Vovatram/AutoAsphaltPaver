@@ -30,10 +30,10 @@ function SortIcon({ active, dir }) {
 }
 
 const COLUMNS = [
-  { key: 'name',            label: 'Полоса / Участок' },
-  { key: 'condition',       label: 'Состояние' },
-  { key: 'last_paved',      label: 'Последний ремонт' },
-  { key: 'weather_suitable', label: 'Погода' },
+  { key: 'name',             label: 'Участок / Полоса' },
+  { key: 'condition',        label: 'Состояние' },
+  { key: 'last_paved',       label: 'Последний ремонт' },
+  { key: 'weather_suitable', label: 'Окна для ремонта' },
 ];
 
 function sortLanes(lanes, key, dir) {
