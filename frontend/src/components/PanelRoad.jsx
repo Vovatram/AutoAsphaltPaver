@@ -56,32 +56,16 @@ export default function PanelRoad({ road, dark, onClose }) {
       </div>
 
       <div className="p-4 space-y-4">
-        {/* Lanes */}
+        {/* Road scheme */}
         <section>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
-            Полосы движения
+          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+            Схема дороги
           </h3>
-          <p className="text-xs text-gray-400 mb-2">Нажмите на полосу, чтобы открыть подробную информацию</p>
-          <div className="space-y-2">
-            {road.lanes.map(lane => (
-              <button
-                key={lane.id}
-                onClick={() => { setSelectedLane(lane); setShowPlan(false); }}
-                className="w-full text-left bg-gray-50 hover:bg-orange-50 hover:border-orange-200 rounded-lg p-3 border border-gray-100 transition-colors cursor-pointer"
-              >
-                <div className="flex items-center justify-between mb-1 gap-2">
-                  <span className="text-sm font-medium text-gray-800 truncate">{lane.name}</span>
-                  <span className={`text-xs px-2 py-0.5 rounded-full shrink-0 ${CONDITION_STYLE[lane.condition] ?? 'bg-gray-400 text-white'}`}>
-                    {lane.condition}
-                  </span>
-                </div>
-                <p className="text-xs text-gray-500">
-                  Последняя укладка: <span className="font-medium text-gray-700">{lane.last_paved}</span>
-                </p>
-                <p className="text-xs text-orange-500 mt-1 font-medium">Нажмите для деталей →</p>
-              </button>
-            ))}
-          </div>
+          <RoadScheme
+            lanes={road.lanes}
+            selectedLane={selectedLane}
+            onSelectLane={(lane) => { setSelectedLane(lane); setShowPlan(false); }}
+          />
         </section>
 
         {/* Weather */}
