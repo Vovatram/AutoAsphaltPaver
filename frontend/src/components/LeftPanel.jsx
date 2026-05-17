@@ -245,6 +245,12 @@ export default function LeftPanel({ dark, onToggleDark, roads, parkings, onSelec
               </button>
             ))}
           </div>
+          <div className="mt-2 flex items-center justify-between px-1 pt-2 border-t border-slate-700">
+            <span className="text-xs text-slate-400">Итого в парке:</span>
+            <span className="text-xs font-bold text-white bg-slate-600 px-2 py-0.5 rounded-full">
+              {parkings.reduce((n, p) => n + p.vehicle_count, 0)} ед.
+            </span>
+          </div>
         </div>
       </div>
     </div>
