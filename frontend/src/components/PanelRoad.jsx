@@ -11,7 +11,7 @@ function pluralDays(n) {
   return 'дней';
 }
 
-export default function PanelRoad({ road, dark, onClose }) {
+export default function PanelRoad({ road, dark, onClose, polyEdit, onStartPolyEdit, onUndoPolyEdit, onFinishPolyEdit, onCancelPolyEdit }) {
   const [selectedLane, setSelectedLane] = useState(null);
   const [showPlan, setShowPlan] = useState(false);
 
