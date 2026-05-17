@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
-import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
+import { YMaps, Map, Placemark, Polygon } from '@pbe/react-yandex-maps';
 import axios from 'axios';
 import LeftPanel from './components/LeftPanel.jsx';
 import PanelRoad from './components/PanelRoad.jsx';
 import PanelVehicle from './components/PanelVehicle.jsx';
 
 const API = 'http://localhost:8000/api';
+
+const MAP_CENTER = [57.0, 35.5];
+const MAP_ZOOM = 7;
 
 export default function MapPage() {
   const [dark, setDark] = useState(false);
@@ -58,35 +61,62 @@ export default function MapPage() {
       <div className="flex-1 relative">
         <YMaps query={{ lang: 'ru_RU', load: 'package.full' }}>
           <Map
-            defaultState={{ center: [55.751, 37.618], zoom: 12 }}
+            defaultState={{ center: MAP_CENTER, zoom: MAP_ZOOM }}
             style={{ width: '100%', height: '100%' }}
             options={{ suppressMapOpenBlock: true }}
           >
+            {/* Road polygons */}
             {roads.map(r => (
-              <Placemark
+              <Polygon
                 key={`road-${r.id}`}
-                geometry={r.coords}
-                properties={{ iconContent: r.name.split(',')[0] }}
-                options={{ preset: 'islands#orangeStretchyIcon', openBalloonOnClick: false }}
+                geometry={[r.polygon]}
+                options={{
+                  fillColor: '#f97316',
+                  strokeColor: '#c2410c',
+                  fillOpacity: 0.55,
+                  strokeWidth: 2,
+                  openBalloonOnClick: false,
+                }}
+                properties={{ hintContent: r.name }}
                 onClick={() => openRoad(r.id)}
               />
             ))}
 
+            {/* Factory placemarks with icon + label + vehicle count */}
             {factories.map(f => (
               <Placemark
                 key={`factory-${f.id}`}
                 geometry={f.coords}
-                properties={{ iconContent: f.name }}
-                options={{ preset: 'islands#darkGreenStretchyIcon', openBalloonOnClick: false }}
+                properties={{
+                  iconContent: f.vehicle_count > 0 ? String(f.vehicle_count) : '🏭',
+                  iconCaption: f.name,
+                  hintContent: `${f.name} — ${f.capacity_tons_day} т/сут`,
+                }}
+                options={{
+                  preset: f.vehicle_count > 0
+                    ? 'islands#darkGreenCircleIcon'
+                    : 'islands#darkGreenDotIconWithCaption',
+                  openBalloonOnClick: false,
+                  iconColor: '#15803d',
+                }}
               />
             ))}
 
+            {/* Parking placemarks with icon + label + vehicle count */}
             {parkings.map(p => (
               <Placemark
                 key={`parking-${p.id}`}
                 geometry={p.coords}
-                properties={{ iconContent: p.name }}
-                options={{ preset: 'islands#blueStretchyIcon', openBalloonOnClick: false }}
+                properties={{
+                  iconContent: p.vehicle_count > 0 ? String(p.vehicle_count) : 'P',
+                  iconCaption: p.name,
+                  hintContent: `${p.name} — ${p.vehicle_count} ед. техники`,
+                }}
+                options={{
+                  preset: 'islands#blueCircleIcon',
+                  openBalloonOnClick: false,
+                  iconColor: '#1d4ed8',
+                }}
                 onClick={() => openParking(p.id)}
               />
             ))}
