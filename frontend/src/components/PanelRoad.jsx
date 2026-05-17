@@ -1,3 +1,7 @@
+import { useState } from 'react';
+import LinePanel from './LinePanel.jsx';
+import PlanPanel from './PlanPanel.jsx';
+
 const CONDITION_STYLE = {
   'Хорошее':            'bg-green-500 text-white',
   'Удовлетворительное': 'bg-yellow-500 text-white',
@@ -14,7 +18,16 @@ function pluralDays(n) {
 }
 
 export default function PanelRoad({ road, dark, onClose }) {
+  const [selectedLane, setSelectedLane] = useState(null);
+  const [showPlan, setShowPlan] = useState(false);
+
   const days = Math.ceil(road.repair_hours / 24);
+
+  const handleDone = (plan) => {
+    console.log('Задание сформировано:', plan);
+    setShowPlan(false);
+    setSelectedLane(null);
+  };
 
   return (
     <div className="absolute top-0 right-0 h-full w-96 bg-white shadow-2xl overflow-y-auto z-10 flex flex-col">
@@ -47,9 +60,14 @@ export default function PanelRoad({ road, dark, onClose }) {
           <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
             Полосы движения
           </h3>
+          <p className="text-xs text-gray-400 mb-2">Нажмите на полосу, чтобы открыть подробную информацию</p>
           <div className="space-y-2">
             {road.lanes.map(lane => (
-              <div key={lane.id} className="bg-gray-50 rounded-lg p-3 border border-gray-100">
+              <button
+                key={lane.id}
+                onClick={() => { setSelectedLane(lane); setShowPlan(false); }}
+                className="w-full text-left bg-gray-50 hover:bg-orange-50 hover:border-orange-200 rounded-lg p-3 border border-gray-100 transition-colors cursor-pointer"
+              >
                 <div className="flex items-center justify-between mb-1 gap-2">
                   <span className="text-sm font-medium text-gray-800 truncate">{lane.name}</span>
                   <span className={`text-xs px-2 py-0.5 rounded-full shrink-0 ${CONDITION_STYLE[lane.condition] ?? 'bg-gray-400 text-white'}`}>
@@ -59,7 +77,8 @@ export default function PanelRoad({ road, dark, onClose }) {
                 <p className="text-xs text-gray-500">
                   Последняя укладка: <span className="font-medium text-gray-700">{lane.last_paved}</span>
                 </p>
-              </div>
+                <p className="text-xs text-orange-500 mt-1 font-medium">Нажмите для деталей →</p>
+              </button>
             ))}
           </div>
         </section>
@@ -89,6 +108,26 @@ export default function PanelRoad({ road, dark, onClose }) {
           </p>
         </section>
       </div>
+
+      {/* Lane detail popup */}
+      {selectedLane && !showPlan && (
+        <LinePanel
+          lane={selectedLane}
+          road={road}
+          onClose={() => setSelectedLane(null)}
+          onStartPlan={() => setShowPlan(true)}
+        />
+      )}
+
+      {/* Plan panel */}
+      {selectedLane && showPlan && (
+        <PlanPanel
+          road={road}
+          lane={selectedLane}
+          onClose={() => setShowPlan(false)}
+          onDone={handleDone}
+        />
+      )}
     </div>
   );
 }
