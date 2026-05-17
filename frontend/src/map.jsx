@@ -234,6 +234,10 @@ export default function MapPage() {
           </Map>
         </YMaps>
 
+        {showLanes && (
+          <LineInformation onClose={() => setShowLanes(false)} />
+        )}
+
         {panel?.type === 'road' && (
           <PanelRoad
             road={panel.data}
