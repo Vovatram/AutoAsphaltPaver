@@ -185,6 +185,7 @@ export default function MapPage() {
         onSelectParking={openParking}
         onSelectVehicleType={openVehicleType}
         onShowLanes={() => setShowLanes(true)}
+        vehicleCounts={vehicleCounts}
         activeRoadId={panel?.type === 'road' ? panel.data?.id : null}
       />
 
