@@ -222,16 +222,18 @@ export default function LeftPanel({ dark, onToggleDark, roads, parkings, onSelec
           </p>
           <div className="flex flex-col gap-1">
             {VEHICLE_FLEET.map(v => (
-              <div
+              <button
                 key={v.type}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-700 text-sm"
+                onClick={() => onSelectVehicleType?.(v.type, v.label, v.icon)}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-sm transition-colors w-full text-left"
               >
                 <span className="text-lg w-7 text-center shrink-0">{v.icon}</span>
                 <div className="min-w-0 flex-1">
                   <p className="text-xs text-white leading-tight truncate">{v.label}</p>
                   <p className="text-xs text-slate-400">{v.count}</p>
                 </div>
-              </div>
+                <span className="text-slate-500 text-xs shrink-0">›</span>
+              </button>
             ))}
           </div>
         </div>
