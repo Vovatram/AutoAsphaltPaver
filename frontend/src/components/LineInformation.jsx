@@ -184,14 +184,20 @@ export default function LineInformation({ onClose }) {
                         </p>
                       </td>
 
-                      {/* Weather */}
+                      {/* Weather windows */}
                       <td className="px-4 py-3">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-base">{lane.weather_suitable ? '✅' : '⛔'}</span>
-                          <span className={`text-xs font-medium ${lane.weather_suitable ? 'text-green-700' : 'text-red-600'}`}>
-                            {lane.weather_suitable ? 'Можно' : 'Нельзя'}
-                          </span>
-                        </div>
+                        {lane.weather_windows?.length > 0 ? (
+                          <div className="flex flex-wrap gap-1">
+                            {lane.weather_windows.map((w, wi) => (
+                              <span key={wi} className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200 whitespace-nowrap">
+                                <span className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0" />
+                                {w}
+                              </span>
+                            ))}
+                          </div>
+                        ) : (
+                          <span className="text-xs font-medium text-red-500">Нет окон</span>
+                        )}
                       </td>
 
                       {/* Action */}
