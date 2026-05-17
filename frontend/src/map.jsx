@@ -22,6 +22,43 @@ function makeIconHtml(emoji, name, count) {
   );
 }
 
+function RoadLabel({ road, isActive, onClick }) {
+  const ymaps = useYMaps(['templateLayoutFactory']);
+
+  const layout = useMemo(() => {
+    if (!ymaps?.templateLayoutFactory) return null;
+    const bg = isActive ? 'rgba(234,88,12,0.95)' : 'rgba(249,115,22,0.88)';
+    const border = isActive ? '#7c2d12' : '#c2410c';
+    const shadow = isActive ? '0 2px 8px rgba(124,45,18,.5)' : '0 1px 4px rgba(0,0,0,.3)';
+    return ymaps.templateLayoutFactory.createClass(
+      `<div style="transform:translate(-50%,-100%);cursor:pointer;text-align:center">` +
+        `<div style="display:inline-block;background:${bg};color:#fff;font-size:11px;font-weight:700;` +
+        `padding:3px 8px;border-radius:6px;border:1.5px solid ${border};` +
+        `box-shadow:${shadow};white-space:nowrap;letter-spacing:0.01em">` +
+          `🛣️ ${road.name}` +
+        `</div>` +
+        `<div style="width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;` +
+        `border-top:5px solid ${border};margin:0 auto"></div>` +
+      `</div>`
+    );
+  }, [ymaps, road.name, isActive]);
+
+  if (!layout) return null;
+
+  return (
+    <Placemark
+      geometry={road.coords}
+      options={{
+        iconLayout: layout,
+        iconShape: { type: 'Rectangle', coordinates: [[-80, -36], [80, 6]] },
+        openBalloonOnClick: false,
+        zIndex: isActive ? 20 : 5,
+      }}
+      onClick={onClick}
+    />
+  );
+}
+
 function FactoryMarker({ factory }) {
   const ymaps = useYMaps(['templateLayoutFactory']);
 
