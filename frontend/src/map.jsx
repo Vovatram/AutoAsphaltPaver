@@ -74,6 +74,7 @@ function ParkingMarker({ parking, onClick }) {
 }
 
 export default function MapPage() {
+  const mapRef = useRef(null);
   const [dark, setDark] = useState(false);
   const [roads, setRoads] = useState([]);
   const [factories, setFactories] = useState([]);
