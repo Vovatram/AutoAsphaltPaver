@@ -77,8 +77,8 @@ function FactoryPanel({ factory, onClose, onSelectVehicle }) {
         {/* Factory info */}
         <div className="grid grid-cols-2 gap-2">
           <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
-            <p className="text-xs text-gray-400 mb-0.5">Мощность</p>
-            <p className="text-sm font-bold text-gray-900">{factory.capacity_tons_day} т/сут</p>
+            <p className="text-xs text-gray-400 mb-0.5">Производительность</p>
+            <p className="text-sm font-bold text-gray-900">{factory.capacity_t_per_hour} т/ч</p>
           </div>
           <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
             <p className="text-xs text-gray-400 mb-0.5">Загрузка ТС</p>
