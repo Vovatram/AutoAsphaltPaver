@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 app = FastAPI(title="AutoAsphaltPaver API")
 
@@ -17,7 +18,13 @@ ROADS = [
     {
         "id": 1,
         "name": "ул. Ленина, уч. №1",
-        "coords": [55.7512, 37.6184],
+        "coords": [56.390318, 36.571799],
+        "polygon": [
+            [56.386357, 36.575216],
+            [56.386231, 36.575442],
+            [56.394278, 36.568381],
+            [56.394404, 36.568155],
+        ],
         "photo": "https://picsum.photos/seed/road1/600/280",
         "lanes": [
             {"id": 1, "name": "Полоса 1 (А→Б)", "condition": "Удовлетворительное", "last_paved": "2021-03-15"},
@@ -30,7 +37,13 @@ ROADS = [
     {
         "id": 2,
         "name": "пр. Победы, уч. №5",
-        "coords": [55.7625, 37.6350],
+        "coords": [56.568796, 36.478926],
+        "polygon": [
+            [56.564770, 36.481135],
+            [56.564644, 36.481361],
+            [56.572822, 36.476717],
+            [56.572948, 36.476491],
+        ],
         "photo": "https://picsum.photos/seed/road2/600/280",
         "lanes": [
             {"id": 1, "name": "Полоса 1", "condition": "Хорошее",            "last_paved": "2023-06-10"},
@@ -44,7 +57,13 @@ ROADS = [
     {
         "id": 3,
         "name": "ул. Советская, уч. №2",
-        "coords": [55.7400, 37.6050],
+        "coords": [57.930603, 33.928645],
+        "polygon": [
+            [57.929219, 33.932381],
+            [57.929093, 33.932607],
+            [57.931987, 33.924909],
+            [57.932113, 33.924683],
+        ],
         "photo": "https://picsum.photos/seed/road3/600/280",
         "lanes": [
             {"id": 1, "name": "Полоса 1", "condition": "Критическое", "last_paved": "2015-05-22"},
@@ -57,7 +76,13 @@ ROADS = [
     {
         "id": 4,
         "name": "ул. Пушкина, уч. №3",
-        "coords": [55.7580, 37.5900],
+        "coords": [57.472149, 34.349623],
+        "polygon": [
+            [57.469799, 34.356485],
+            [57.469673, 34.356711],
+            [57.474499, 34.342760],
+            [57.474625, 34.342534],
+        ],
         "photo": "https://picsum.photos/seed/road4/600/280",
         "lanes": [
             {"id": 1, "name": "Полоса 1", "condition": "Плохое", "last_paved": "2020-07-18"},
@@ -66,27 +91,49 @@ ROADS = [
         "weather_note": "Температура +15°C, без осадков — ремонт возможен",
         "repair_hours": 48,
     },
+    {
+        "id": 5,
+        "name": "Объездная дорога, уч. №7",
+        "coords": [56.761401, 36.207698],
+        "polygon": [
+            [56.758565, 36.213815],
+            [56.758439, 36.214041],
+            [56.764236, 36.201581],
+            [56.764362, 36.201355],
+        ],
+        "photo": "https://picsum.photos/seed/road5/600/280",
+        "lanes": [
+            {"id": 1, "name": "Полоса 1", "condition": "Удовлетворительное", "last_paved": "2022-11-01"},
+            {"id": 2, "name": "Полоса 2", "condition": "Хорошее",            "last_paved": "2024-03-20"},
+        ],
+        "weather_suitable": True,
+        "weather_note": "Температура +12°C, без осадков — ремонт возможен",
+        "repair_hours": 60,
+    },
 ]
 
 FACTORIES = [
     {
         "id": 1,
         "name": "АБЗ «Дорожник» №1",
-        "coords": [55.7800, 37.5600],
+        "coords": [56.514296, 36.156113],
+        "vehicle_count": 2,
         "materials": ["Асфальтобетон горячий тип А", "Битум БНД 60/90", "Щебень фр. 5-20"],
         "capacity_tons_day": 500,
     },
     {
         "id": 2,
         "name": "АБЗ «СтройДор» №2",
-        "coords": [55.7250, 37.6600],
+        "coords": [57.546917, 34.537911],
+        "vehicle_count": 0,
         "materials": ["Асфальтобетон горячий тип Б", "Щебеночно-мастичный асфальт СМА-16"],
         "capacity_tons_day": 350,
     },
     {
         "id": 3,
         "name": "АБЗ «МосДорСтрой» №3",
-        "coords": [55.7700, 37.6450],
+        "coords": [57.997556, 33.263784],
+        "vehicle_count": 1,
         "materials": ["Асфальтобетон холодный", "Битумная эмульсия катионная"],
         "capacity_tons_day": 280,
     },
@@ -195,8 +242,8 @@ _VEHICLES_P2 = [
 ]
 
 PARKINGS = [
-    {"id": 1, "name": "Стоянка №1 (Западная)",  "coords": [55.7550, 37.5800], "vehicles": _VEHICLES_P1},
-    {"id": 2, "name": "Стоянка №2 (Восточная)", "coords": [55.7450, 37.6450], "vehicles": _VEHICLES_P2},
+    {"id": 1, "name": "Стоянка №1",  "coords": [56.514296, 36.156113], "vehicles": _VEHICLES_P1},
+    {"id": 2, "name": "Стоянка №2", "coords": [57.240149, 34.899585], "vehicles": _VEHICLES_P2},
 ]
 
 _ALL_VEHICLES = _VEHICLES_P1 + _VEHICLES_P2
@@ -206,11 +253,13 @@ _ALL_VEHICLES = _VEHICLES_P1 + _VEHICLES_P2
 
 @app.get("/api/roads")
 def get_roads():
-    return [{"id": r["id"], "name": r["name"], "coords": r["coords"]} for r in ROADS]
+    print("GET /api/roads")
+    return [{"id": r["id"], "name": r["name"], "coords": r["coords"], "polygon": r["polygon"]} for r in ROADS]
 
 
 @app.get("/api/roads/{road_id}")
 def get_road(road_id: int):
+    print(f"GET /api/roads/{road_id}")
     road = next((r for r in ROADS if r["id"] == road_id), None)
     if not road:
         raise HTTPException(status_code=404, detail="Road not found")
@@ -219,11 +268,13 @@ def get_road(road_id: int):
 
 @app.get("/api/factories")
 def get_factories():
+    print("GET /api/factories")
     return FACTORIES
 
 
 @app.get("/api/parkings")
 def get_parkings():
+    print("GET /api/parkings")
     return [
         {
             "id": p["id"],
@@ -237,6 +288,7 @@ def get_parkings():
 
 @app.get("/api/parkings/{parking_id}")
 def get_parking(parking_id: int):
+    print(f"GET /api/parkings/{parking_id}")
     parking = next((p for p in PARKINGS if p["id"] == parking_id), None)
     if not parking:
         raise HTTPException(status_code=404, detail="Parking not found")
@@ -245,7 +297,44 @@ def get_parking(parking_id: int):
 
 @app.get("/api/vehicles/{vehicle_id}")
 def get_vehicle(vehicle_id: int):
+    print(f"GET /api/vehicles/{vehicle_id}")
     v = next((v for v in _ALL_VEHICLES if v["id"] == vehicle_id), None)
     if not v:
         raise HTTPException(status_code=404, detail="Vehicle not found")
     return v
+
+
+class PlanRequest(BaseModel):
+    road_id: int
+    lane_id: int
+
+
+@app.post("/api/plans")
+def create_plan(req: PlanRequest):
+    print(f"POST /api/plans road_id={req.road_id} lane_id={req.lane_id}")
+    road = next((r for r in ROADS if r["id"] == req.road_id), None)
+    if not road:
+        raise HTTPException(status_code=404, detail="Road not found")
+    dump_trucks = max(2, round(road["repair_hours"] / 36))
+    plan = {
+        "road_name": road["name"],
+        "dump_trucks": dump_trucks,
+        "transfer_machines": 1,
+        "pavers": 1,
+        "rollers": 2,
+        "closure_vehicles": 1,
+    }
+    print(f"  → plan: {plan}")
+    return plan
+
+
+@app.post("/api/auth/register")
+def register(body: dict):
+    print(f"POST /api/auth/register username={body.get('username')}")
+    return {"ok": True, "message": "Регистрация успешна"}
+
+
+@app.post("/api/auth/login")
+def login(body: dict):
+    print(f"POST /api/auth/login username={body.get('username')}")
+    return {"ok": True, "message": "Вход выполнен"}
