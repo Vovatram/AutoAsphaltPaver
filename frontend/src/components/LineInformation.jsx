@@ -238,6 +238,16 @@ export default function LineInformation({ onClose }) {
           </div>
         )}
       </div>
+
+      {/* PlanPanel opens on top when a lane repair is initiated */}
+      {planTarget && (
+        <PlanPanel
+          road={planTarget.road}
+          lane={planTarget.lane}
+          onClose={() => setPlanTarget(null)}
+          onDone={() => { setPlanTarget(null); onClose(); }}
+        />
+      )}
     </div>
   );
 }
