@@ -190,6 +190,24 @@ export default function LineInformation({ onClose }) {
                           </span>
                         </div>
                       </td>
+
+                      {/* Action */}
+                      <td className="px-4 py-3">
+                        {lane.weather_suitable ? (
+                          <button
+                            onClick={() => setPlanTarget({
+                              road: { id: lane.road_id, name: lane.road_name, repair_hours: lane.repair_hours },
+                              lane: { id: lane.id, name: lane.name },
+                            })}
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white text-xs font-semibold transition-colors whitespace-nowrap"
+                          >
+                            <span>🚜</span>
+                            <span>Начать ремонт</span>
+                          </button>
+                        ) : (
+                          <span className="text-xs text-gray-300">—</span>
+                        )}
+                      </td>
                     </tr>
                   );
                 })}
