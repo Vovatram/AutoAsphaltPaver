@@ -80,6 +80,7 @@ function FactoryMarker({ factory, onClick }) {
         openBalloonOnClick: false,
       }}
       properties={{ hintContent: `${factory.name} — ${factory.capacity_tons_day} т/сут` }}
+      onClick={onClick}
     />
   );
 }
