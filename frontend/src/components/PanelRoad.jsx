@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import LinePanel from './LinePanel.jsx';
 import PlanPanel from './PlanPanel.jsx';
+import RoadScheme from './RoadScheme.jsx';
 
 const CONDITION_STYLE = {
   'Хорошее':            'bg-green-500 text-white',
