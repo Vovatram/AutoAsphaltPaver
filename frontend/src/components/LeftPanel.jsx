@@ -157,9 +157,18 @@ export default function LeftPanel({ dark, onToggleDark, roads, parkings, onSelec
       <div className="flex-1 overflow-y-auto py-2">
         {/* Road sections */}
         <div className="px-4 pt-2 pb-3">
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-            Участки дороги
-          </p>
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              Участки дороги
+            </p>
+            <button
+              onClick={onShowLanes}
+              className="flex items-center gap-1 text-xs text-orange-400 hover:text-orange-300 font-medium transition-colors"
+            >
+              <span>📋</span>
+              <span>Все полосы</span>
+            </button>
+          </div>
           <div className="flex flex-col gap-1">
             {roads.length === 0 && (
               <p className="text-xs text-slate-500 px-1">Загрузка...</p>
