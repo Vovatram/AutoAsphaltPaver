@@ -230,20 +230,23 @@ export default function LeftPanel({ dark, onToggleDark, roads, parkings, onSelec
             Парк техники
           </p>
           <div className="flex flex-col gap-1">
-            {VEHICLE_FLEET.map(v => (
-              <button
-                key={v.type}
-                onClick={() => onSelectVehicleType?.(v.type, v.label, v.icon)}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-sm transition-colors w-full text-left"
-              >
-                <span className="text-lg w-7 text-center shrink-0">{v.icon}</span>
-                <div className="min-w-0 flex-1">
-                  <p className="text-xs text-white leading-tight truncate">{v.label}</p>
-                  <p className="text-xs text-slate-400">{v.count}</p>
-                </div>
-                <span className="text-slate-500 text-xs shrink-0">›</span>
-              </button>
-            ))}
+            {VEHICLE_FLEET.map(v => {
+              const count = vehicleCounts[v.type] ?? 0;
+              return (
+                <button
+                  key={v.type}
+                  onClick={() => onSelectVehicleType?.(v.type, v.label, v.icon)}
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-sm transition-colors w-full text-left"
+                >
+                  <span className="text-lg w-7 text-center shrink-0">{v.icon}</span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs text-white leading-tight truncate">{v.label}</p>
+                    <p className="text-xs text-slate-400">{count} ед.</p>
+                  </div>
+                  <span className="text-slate-500 text-xs shrink-0">›</span>
+                </button>
+              );
+            })}
           </div>
           <div className="mt-2 flex items-center justify-between px-1 pt-2 border-t border-slate-700">
             <span className="text-xs text-slate-400">Итого в парке:</span>
