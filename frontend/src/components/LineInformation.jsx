@@ -202,7 +202,7 @@ export default function LineInformation({ onClose }) {
 
                       {/* Action */}
                       <td className="px-4 py-3">
-                        {lane.weather_suitable ? (
+                        {lane.weather_windows?.length > 0 ? (
                           <button
                             onClick={() => setPlanTarget({
                               road: { id: lane.road_id, name: lane.road_name, repair_hours: lane.repair_hours },
