@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.dark-mode {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Double-invert to restore original appearance for photos in dark mode */
+.dark-mode .photo-reset {
+  filter: invert(1) hue-rotate(180deg);
+}
