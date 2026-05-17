@@ -29,7 +29,7 @@ export default function LinePanel({ lane, road, onClose, onStartPlan }) {
           <div>
             <p className="text-xs text-gray-400 uppercase tracking-wider">Полоса движения</p>
             <h3 className="font-bold text-gray-900 text-base mt-0.5">{lane.name}</h3>
-            <p className="text-xs text-gray-500 mt-0.5">{road.name}</p>
+            <p className="text-xs text-gray-500 mt-0.5">{road.name}{lane.direction ? ` · ${lane.direction}` : ''}</p>
           </div>
           <button
             onClick={onClose}
