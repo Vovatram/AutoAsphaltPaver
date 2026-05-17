@@ -25,10 +25,12 @@ ROADS = [
             [56.394278, 36.568381],
             [56.394404, 36.568155],
         ],
-        "photo": "https://picsum.photos/seed/road1/600/280",
+        "photo": "https://cdn.discordapp.com/attachments/1440751646526275725/1505657485929873548/1.png?ex=6a0b6c4e&is=6a0a1ace&hm=c4faf58ec905e516b11a712458847082cd90775595189ed33af4d408b82b6385&",
         "lanes": [
-            {"id": 1, "name": "Полоса 1 (А→Б)", "condition": "Удовлетворительное", "last_paved": "2021-03-15"},
-            {"id": 2, "name": "Полоса 2 (Б→А)", "condition": "Плохое",              "last_paved": "2019-08-20"},
+            {"id": 1, "name": "Полоса 1", "direction": "На Москву",          "condition": "Удовлетворительное", "last_paved": "2021-03-15"},
+            {"id": 2, "name": "Полоса 2", "direction": "На Москву",          "condition": "Плохое",             "last_paved": "2019-08-20"},
+            {"id": 3, "name": "Полоса 3", "direction": "На Санкт-Петербург", "condition": "Хорошее",            "last_paved": "2023-01-10"},
+            {"id": 4, "name": "Полоса 4", "direction": "На Санкт-Петербург", "condition": "Критическое",        "last_paved": "2015-03-05"},
         ],
         "weather_suitable": True,
         "weather_note": "Температура +18°C, ясно — ремонт возможен",
@@ -45,7 +47,7 @@ ROADS = [
             [56.572822, 36.476717],
             [56.572948, 36.476491],
         ],
-        "photo": "https://picsum.photos/seed/road2/600/280",
+        "photo": "https://cdn.discordapp.com/attachments/1440751646526275725/1505657486626258974/2.png?ex=6a0b6c4e&is=6a0a1ace&hm=d150fc82667665049542710adb668b07c868fa38d10bd80b8d67b4db6b591c1d&",
         "lanes": [
             {"id": 1, "name": "Полоса 1", "condition": "Хорошее",            "last_paved": "2023-06-10"},
             {"id": 2, "name": "Полоса 2", "condition": "Удовлетворительное", "last_paved": "2022-04-05"},
@@ -66,7 +68,7 @@ ROADS = [
             [57.931987, 33.924909],
             [57.932113, 33.924683],
         ],
-        "photo": "https://picsum.photos/seed/road3/600/280",
+        "photo": "https://cdn.discordapp.com/attachments/1440751646526275725/1505657484080320512/3.png?ex=6a0b6c4d&is=6a0a1acd&hm=116bd2091c6af1a79cf78d44278fab46f7d10166c52f9e3745b294d19d995edf&",
         "lanes": [
             {"id": 1, "name": "Полоса 1", "condition": "Критическое", "last_paved": "2015-05-22"},
             {"id": 2, "name": "Полоса 2", "condition": "Плохое",      "last_paved": "2018-09-14"},
@@ -86,7 +88,7 @@ ROADS = [
             [57.474499, 34.342760],
             [57.474625, 34.342534],
         ],
-        "photo": "https://picsum.photos/seed/road4/600/280",
+        "photo": "https://cdn.discordapp.com/attachments/1440751646526275725/1505657484487037050/4.png?ex=6a0b6c4e&is=6a0a1ace&hm=ed6c607b2d15b126a37315e48483d469f52dd83326eb7542fb5c41e6bffb14b7&",
         "lanes": [
             {"id": 1, "name": "Полоса 1", "condition": "Плохое", "last_paved": "2020-07-18"},
         ],
@@ -105,7 +107,7 @@ ROADS = [
             [56.764236, 36.201581],
             [56.764362, 36.201355],
         ],
-        "photo": "https://picsum.photos/seed/road5/600/280",
+        "photo": "https://cdn.discordapp.com/attachments/1440751646526275725/1505657484998869186/5.png?ex=6a0b6c4e&is=6a0a1ace&hm=24c58fb98cf60b66b9c8883e18497ed70592671d7b7f1df4b9f6fa673f0745ba&",
         "lanes": [
             {"id": 1, "name": "Полоса 1", "condition": "Удовлетворительное", "last_paved": "2022-11-01"},
             {"id": 2, "name": "Полоса 2", "condition": "Хорошее",            "last_paved": "2024-03-20"},
