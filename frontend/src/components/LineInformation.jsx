@@ -160,10 +160,10 @@ export default function LineInformation({ onClose }) {
                     >
                       <td className="px-4 py-3 text-xs text-gray-300 tabular-nums">{i + 1}</td>
 
-                      {/* Name + road */}
+                      {/* Road + lane */}
                       <td className="px-4 py-3">
-                        <p className="font-medium text-gray-900 text-sm">{lane.name}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">{lane.road_name}</p>
+                        <p className="font-medium text-gray-900 text-sm">{lane.road_name}</p>
+                        <p className="text-xs text-gray-400 mt-0.5">{lane.name}</p>
                       </td>
 
                       {/* Condition */}
