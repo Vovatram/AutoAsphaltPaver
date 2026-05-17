@@ -385,16 +385,30 @@ def create_plan(req: PlanRequest):
     road = next((r for r in ROADS if r["id"] == req.road_id), None)
     if not road:
         raise HTTPException(status_code=404, detail="Road not found")
-    dump_trucks = max(2, round(road["repair_hours"] / 36))
+    dump_truck_count = max(2, round(road["repair_hours"] / 36))
+
+    def suggest(type_key, count):
+        return [
+            {"id": v["id"], "name": v["name"], "type": v["type"]}
+            for v in _ALL_VEHICLES if v["type"] == type_key
+        ][:count]
+
     plan = {
         "road_name": road["name"],
-        "dump_trucks": dump_trucks,
+        "dump_trucks": dump_truck_count,
         "transfer_machines": 1,
         "pavers": 1,
         "rollers": 2,
         "closure_vehicles": 1,
+        "suggested_vehicles": {
+            "dump_truck":       suggest("dump_truck", dump_truck_count),
+            "transfer_machine": suggest("transfer_machine", 1),
+            "paver":            suggest("paver", 1),
+            "roller":           suggest("roller", 2),
+            "closure_vehicle":  suggest("closure_vehicle", 1),
+        },
     }
-    print(f"  → plan: {plan}")
+    print(f"  → plan: dump_trucks={dump_truck_count}")
     return plan
 
 
