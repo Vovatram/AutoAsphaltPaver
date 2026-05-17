@@ -128,6 +128,7 @@ export default function MapPage() {
         parkings={parkings}
         onSelectRoad={openRoad}
         onSelectParking={openParking}
+        activeRoadId={panel?.type === 'road' ? panel.data?.id : null}
       />
 
       <div className="flex-1 relative">
