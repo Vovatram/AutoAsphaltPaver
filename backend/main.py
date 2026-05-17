@@ -368,6 +368,7 @@ def get_all_lanes():
                 "last_paved": lane["last_paved"],
                 "weather_suitable": road["weather_suitable"],
                 "weather_note": road["weather_note"],
+                "weather_windows": road.get("weather_windows", []),
             })
     return result
 
