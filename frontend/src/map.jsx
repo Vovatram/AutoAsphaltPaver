@@ -136,6 +136,7 @@ export default function MapPage() {
             defaultState={{ center: MAP_CENTER, zoom: MAP_ZOOM }}
             style={{ width: '100%', height: '100%' }}
             options={{ suppressMapOpenBlock: true }}
+            instanceRef={mapRef}
           >
             {/* Road polygons */}
             {roads.map(r => (
