@@ -338,6 +338,25 @@ def get_parking(parking_id: int):
     return parking
 
 
+@app.get("/api/lanes")
+def get_all_lanes():
+    print("GET /api/lanes")
+    result = []
+    for road in ROADS:
+        for lane in road["lanes"]:
+            result.append({
+                "id": lane["id"],
+                "road_id": road["id"],
+                "road_name": road["name"],
+                "name": lane["name"],
+                "condition": lane["condition"],
+                "last_paved": lane["last_paved"],
+                "weather_suitable": road["weather_suitable"],
+                "weather_note": road["weather_note"],
+            })
+    return result
+
+
 @app.get("/api/vehicles")
 def get_all_vehicles(type: str = None):
     print(f"GET /api/vehicles type={type}")
