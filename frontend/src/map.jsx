@@ -93,7 +93,15 @@ export default function MapPage() {
     }).catch(console.error);
   }, []);
 
+  const flyToRoad = (id) => {
+    const road = roads.find(r => r.id === id);
+    if (road && mapRef.current) {
+      mapRef.current.setCenter(road.coords, 14, { duration: 600, checkZoomRange: true });
+    }
+  };
+
   const openRoad = async (id) => {
+    flyToRoad(id);
     const { data } = await axios.get(`${API}/roads/${id}`);
     setPanel({ type: 'road', data });
   };
