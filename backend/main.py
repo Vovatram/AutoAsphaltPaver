@@ -348,6 +348,7 @@ def get_all_lanes():
                 "id": lane["id"],
                 "road_id": road["id"],
                 "road_name": road["name"],
+                "repair_hours": road["repair_hours"],
                 "name": lane["name"],
                 "condition": lane["condition"],
                 "last_paved": lane["last_paved"],
