@@ -318,7 +318,7 @@ def get_factories():
 
 
 @app.get("/api/factories/{factory_id}")
-def get_factory(factory_id: int):
+def get_factory(factory_id: str):
     print(f"GET /api/factories/{factory_id}")
     factory = next((f for f in FACTORIES if f["id"] == factory_id), None)
     if not factory:
