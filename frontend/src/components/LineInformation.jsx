@@ -63,6 +63,7 @@ export default function LineInformation({ onClose }) {
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState({ key: 'condition', dir: 'asc' });
   const [filter, setFilter] = useState('');
+  const [planTarget, setPlanTarget] = useState(null); // { road, lane }
 
   useEffect(() => {
     axios.get(`${API}/lanes`)
