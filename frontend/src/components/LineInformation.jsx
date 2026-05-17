@@ -140,6 +140,9 @@ export default function LineInformation({ onClose }) {
                       <SortIcon active={sort.key === col.key} dir={sort.dir} />
                     </th>
                   ))}
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                    Действие
+                  </th>
                 </tr>
               </thead>
               <tbody>
