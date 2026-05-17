@@ -120,16 +120,21 @@ export default function MapPage() {
   const [parkings, setParkings] = useState([]);
   const [panel, setPanel] = useState(null);
   const [showLanes, setShowLanes] = useState(false);
+  const [vehicleCounts, setVehicleCounts] = useState({});
 
   useEffect(() => {
     Promise.all([
       axios.get(`${API}/roads`),
       axios.get(`${API}/factories`),
       axios.get(`${API}/parkings`),
-    ]).then(([r, f, p]) => {
+      axios.get(`${API}/vehicles`),
+    ]).then(([r, f, p, v]) => {
       setRoads(r.data);
       setFactories(f.data);
       setParkings(p.data);
+      const counts = {};
+      v.data.forEach(vh => { counts[vh.type] = (counts[vh.type] || 0) + 1; });
+      setVehicleCounts(counts);
     }).catch(console.error);
   }, []);
 
