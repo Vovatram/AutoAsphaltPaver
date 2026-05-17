@@ -3,13 +3,6 @@ import LinePanel from './LinePanel.jsx';
 import PlanPanel from './PlanPanel.jsx';
 import RoadScheme from './RoadScheme.jsx';
 
-const CONDITION_STYLE = {
-  'Хорошее':            'bg-green-500 text-white',
-  'Удовлетворительное': 'bg-yellow-500 text-white',
-  'Плохое':             'bg-orange-500 text-white',
-  'Критическое':        'bg-red-500 text-white',
-};
-
 function pluralDays(n) {
   if (n % 100 >= 11 && n % 100 <= 19) return 'дней';
   const r = n % 10;
