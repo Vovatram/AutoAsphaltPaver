@@ -239,7 +239,7 @@ export default function MapPage() {
           />
         )}
 
-        {(panel?.type === 'parking' || panel?.type === 'vehicle') && (
+        {(panel?.type === 'parking' || panel?.type === 'factory' || panel?.type === 'fleet' || panel?.type === 'vehicle') && (
           <PanelVehicle
             panel={panel}
             dark={dark}
