@@ -175,6 +175,7 @@ export default function MapPage() {
         parkings={parkings}
         onSelectRoad={openRoad}
         onSelectParking={openParking}
+        onSelectVehicleType={openVehicleType}
         activeRoadId={panel?.type === 'road' ? panel.data?.id : null}
       />
 
