@@ -80,7 +80,7 @@ function FactoryMarker({ factory, onClick }) {
         iconShape: { type: 'Rectangle', coordinates: [[-70, -65], [70, 8]] },
         openBalloonOnClick: false,
       }}
-      properties={{ hintContent: `${factory.name} — ${factory.capacity_tons_day} т/сут` }}
+      properties={{ hintContent: `${factory.name} — ${factory.capacity_t_per_hour} т/ч` }}
       onClick={onClick}
     />
   );
