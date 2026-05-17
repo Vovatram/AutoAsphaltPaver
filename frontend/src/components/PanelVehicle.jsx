@@ -1,15 +1,17 @@
 const VEHICLE_ICON = {
-  dump_truck:       '🚛',
-  transfer_machine: '🏗',
-  paver:            '🚜',
-  roller:           '⚙️',
+  dump_truck:        '🚛',
+  transfer_machine:  '🏗️',
+  paver:             '🚜',
+  roller:            '🛞',
+  closure_vehicle:   '🚧',
 };
 
 const VEHICLE_LABEL = {
-  dump_truck:       'Самосвал',
-  transfer_machine: 'Перегружатель смеси',
-  paver:            'Асфальтоукладчик (гусеничный)',
-  roller:           'Каток гладковальцовый',
+  dump_truck:        'Самосвал',
+  transfer_machine:  'Перегружатель смеси',
+  paver:             'Асфальтоукладчик (гусеничный)',
+  roller:            'Каток гладковальцовый',
+  closure_vehicle:   'Спецавтомобиль перекрытия дороги',
 };
 
 function PanelHeader({ title, subtitle, onClose }) {
