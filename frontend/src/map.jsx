@@ -217,7 +217,7 @@ export default function MapPage() {
 
             {/* Factory markers — emoji icon + label + optional vehicle count badge */}
             {factories.map(f => (
-              <FactoryMarker key={`factory-${f.id}`} factory={f} />
+              <FactoryMarker key={`factory-${f.id}`} factory={f} onClick={() => openFactory(f.id)} />
             ))}
 
             {/* Parking markers — emoji icon + label + vehicle count badge */}
