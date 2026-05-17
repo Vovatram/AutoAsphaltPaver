@@ -53,6 +53,7 @@ ROADS = [
         ],
         "weather_suitable": False,
         "weather_note": "Ожидаются осадки (дождь) — ремонт не рекомендуется",
+        "weather_windows": [],
         "repair_hours": 120,
     },
     {
