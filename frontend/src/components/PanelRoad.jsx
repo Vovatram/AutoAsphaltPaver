@@ -197,6 +197,7 @@ export default function PanelRoad({ road, dark, onClose, polyEdit, onStartPolyEd
           lane={selectedLane}
           onClose={() => setShowPlan(false)}
           onDone={handleDone}
+          submitting={planning}
         />
       )}
     </div>
