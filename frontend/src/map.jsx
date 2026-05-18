@@ -171,6 +171,8 @@ export default function MapPage() {
   const [showLanes, setShowLanes] = useState(false);
   const [vehicleCounts, setVehicleCounts] = useState({});
   const [vehicles, setVehicles] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [taskView, setTaskView] = useState(null); // null | 'list' | task-object
   const [polyEdit, setPolyEdit] = useState(null);
 
   useEffect(() => {
