@@ -629,6 +629,31 @@ def get_task(task_id: int):
     }
 
 
+class RepairPlanRequest(BaseModel):
+    road_id: int
+    lane_id: int
+    window:  str
+
+
+@app.post("/api/repair/plan")
+def create_repair_plan(req: RepairPlanRequest):
+    road = next((r for r in ROADS if r["id"] == req.road_id), None)
+    if not road:
+        raise HTTPException(status_code=404, detail="Road not found")
+    lane = next((l for l in road["lanes"] if l["id"] == req.lane_id), None)
+    if not lane:
+        raise HTTPException(status_code=404, detail="Lane not found")
+    result = plan_repair(
+        road=road,
+        lane=lane,
+        window_str=req.window,
+        all_vehicles=_ALL_VEHICLES,
+        factories=FACTORIES,
+        parkings=PARKINGS,
+    )
+    return result
+
+
 @app.post("/api/auth/register")
 def register(body: dict):
     return {"ok": True, "message": "Регистрация успешна"}
