@@ -269,7 +269,9 @@ export default function MapPage() {
         onSelectFactory={(id) => { flyToFactory(id); openFactory(id); }}
         onSelectVehicleType={openVehicleType}
         onShowLanes={() => setShowLanes(true)}
+        onShowTasks={openTasks}
         vehicleCounts={vehicleCounts}
+        taskCount={tasks.length}
         activeRoadId={panel?.type === 'road' ? panel.data?.id : null}
       />
 
