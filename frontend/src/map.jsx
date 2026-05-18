@@ -334,6 +334,15 @@ export default function MapPage() {
               <ParkingMarker key={`parking-${p.id}`} parking={p} onClick={(e) => polyEdit ? addPolyPoint(e) : openParking(p.id)} />
             ))}
 
+            {/* Vehicle markers (transit + working on site) */}
+            {vehicles.filter(v => v.location_type === 'transit').map(v => (
+              <VehicleMarker
+                key={`vehicle-${v.id}`}
+                vehicle={v}
+                onClick={(e) => polyEdit ? addPolyPoint(e) : openVehicle(v.id)}
+              />
+            ))}
+
             {/* Polygon editor preview */}
             {polyEdit?.points.length >= 3 && (
               <Polygon
