@@ -58,6 +58,19 @@ export default function LeftPanel({ dark, onToggleDark, roads, parkings, factori
           <span>{dark ? 'Светлая тема' : 'Тёмная тема'}</span>
         </button>
 
+        <button
+          onClick={onShowTasks}
+          className="flex items-center gap-2 w-full px-3 py-2 rounded-lg bg-orange-600 hover:bg-orange-500 text-sm transition-colors text-left font-semibold"
+        >
+          <span className="text-base">📋</span>
+          <span>Задачи</span>
+          {taskCount > 0 && (
+            <span className="ml-auto bg-white text-orange-600 text-xs font-bold px-1.5 py-0.5 rounded-full leading-none">
+              {taskCount}
+            </span>
+          )}
+        </button>
+
         {isLoggedIn ? (
           <button
             onClick={() => setIsLoggedIn(false)}
