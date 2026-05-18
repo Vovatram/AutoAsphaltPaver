@@ -105,17 +105,27 @@ ROADS = [
 _VEHICLES_F1 = [
     {
         "id": 11, "type": "dump_truck", "name": "Самосвал КамАЗ-6522 №05",
+        "coords": [55.859778, 37.536148],
+        "speed_kmh": 0,
+        "current_task": "Загрузка асфальтобетоном",
+        "location_type": "factory",
+        "location_name": "АБЗ-1",
         "schedule": [
-            {"date": "2026-05-17", "time": "07:45", "location": "АБЗ №1", "task": "Загрузка асфальтобетоном"},
-            {"date": "2026-05-17", "time": "09:00", "location": "ул. Ленина уч.1", "task": "Выгрузка"},
-            {"date": "2026-05-17", "time": "10:00", "location": "АБЗ №1", "task": "Повторная загрузка"},
+            {"date": "2026-05-18", "time": "07:45", "location": "АБЗ-1", "task": "Загрузка асфальтобетоном"},
+            {"date": "2026-05-18", "time": "09:00", "location": "102-й км, уч.1", "task": "Выгрузка"},
+            {"date": "2026-05-18", "time": "10:00", "location": "АБЗ-1", "task": "Повторная загрузка"},
         ],
     },
     {
         "id": 12, "type": "dump_truck", "name": "Самосвал КамАЗ-65115 №06",
+        "coords": [56.152, 36.449],
+        "speed_kmh": 74,
+        "current_task": "Следует к объекту",
+        "location_type": "transit",
+        "location_name": None,
         "schedule": [
-            {"date": "2026-05-17", "time": "08:00", "location": "АБЗ №1", "task": "Ожидание загрузки"},
-            {"date": "2026-05-17", "time": "09:15", "location": "ул. Пушкина уч.3", "task": "Выгрузка"},
+            {"date": "2026-05-18", "time": "08:00", "location": "АБЗ-1", "task": "Загрузка"},
+            {"date": "2026-05-18", "time": "09:15", "location": "102-й км, уч.1", "task": "Выгрузка"},
         ],
     },
 ]
@@ -123,9 +133,14 @@ _VEHICLES_F1 = [
 _VEHICLES_F3 = [
     {
         "id": 13, "type": "dump_truck", "name": "Самосвал МАЗ-6516 №07",
+        "coords": [57.129092, 35.434167],
+        "speed_kmh": 0,
+        "current_task": "Ожидание загрузки",
+        "location_type": "factory",
+        "location_name": "АБЗ (Лихославльский муниципальный округ)",
         "schedule": [
-            {"date": "2026-05-17", "time": "07:30", "location": "АБЗ №3", "task": "Загрузка асфальтобетоном холодным"},
-            {"date": "2026-05-17", "time": "09:30", "location": "ул. Советская уч.2", "task": "Выгрузка"},
+            {"date": "2026-05-18", "time": "07:30", "location": "АБЗ Лихославль", "task": "Загрузка асфальтобетоном холодным"},
+            {"date": "2026-05-18", "time": "09:30", "location": "361-й км, уч.2", "task": "Выгрузка"},
         ],
     },
 ]
@@ -169,52 +184,77 @@ FACTORIES = [
 _VEHICLES_P1 = [
     {
         "id": 1, "type": "dump_truck", "name": "Самосвал КамАЗ-6522 №01",
+        "coords": [56.564175, 36.442860],
+        "speed_kmh": 0,
+        "current_task": "Ожидание смены",
+        "location_type": "parking",
+        "location_name": "Стоянка №1",
         "schedule": [
-            {"date": "2026-05-17", "time": "08:00", "location": "Стоянка №1",         "task": "Погрузка на АБЗ №1"},
-            {"date": "2026-05-17", "time": "09:30", "location": "ул. Ленина уч.1",    "task": "Выгрузка материала"},
-            {"date": "2026-05-17", "time": "10:15", "location": "АБЗ №1",             "task": "Обратный рейс — погрузка"},
-            {"date": "2026-05-17", "time": "11:45", "location": "ул. Ленина уч.1",    "task": "Выгрузка материала"},
-            {"date": "2026-05-17", "time": "14:00", "location": "Стоянка №1",         "task": "Конец смены"},
+            {"date": "2026-05-18", "time": "08:00", "location": "Стоянка №1",         "task": "Погрузка на АБЗ №1"},
+            {"date": "2026-05-18", "time": "09:30", "location": "102-й км, уч.1",     "task": "Выгрузка материала"},
+            {"date": "2026-05-18", "time": "10:15", "location": "АБЗ №1",             "task": "Обратный рейс — погрузка"},
+            {"date": "2026-05-18", "time": "11:45", "location": "102-й км, уч.1",     "task": "Выгрузка материала"},
+            {"date": "2026-05-18", "time": "14:00", "location": "Стоянка №1",         "task": "Конец смены"},
         ],
     },
     {
         "id": 2, "type": "dump_truck", "name": "Самосвал КамАЗ-6522 №02",
+        "coords": [56.564175, 36.442860],
+        "speed_kmh": 0,
+        "current_task": "Плановое ТО",
+        "location_type": "parking",
+        "location_name": "Стоянка №1",
         "schedule": [
-            {"date": "2026-05-17", "time": "08:00", "location": "Стоянка №1",         "task": "Погрузка на АБЗ №1"},
-            {"date": "2026-05-17", "time": "09:30", "location": "ул. Ленина уч.1",    "task": "Выгрузка"},
-            {"date": "2026-05-17", "time": "10:30", "location": "АБЗ №1",             "task": "Погрузка"},
-            {"date": "2026-05-17", "time": "12:00", "location": "ул. Советская уч.2", "task": "Выгрузка"},
-            {"date": "2026-05-17", "time": "14:00", "location": "Стоянка №1",         "task": "Конец смены"},
+            {"date": "2026-05-18", "time": "08:00", "location": "Стоянка №1",         "task": "Погрузка на АБЗ №1"},
+            {"date": "2026-05-18", "time": "09:30", "location": "102-й км, уч.1",     "task": "Выгрузка"},
+            {"date": "2026-05-18", "time": "10:30", "location": "АБЗ №1",             "task": "Погрузка"},
+            {"date": "2026-05-18", "time": "12:00", "location": "102-й км, уч.1",     "task": "Выгрузка"},
+            {"date": "2026-05-18", "time": "14:00", "location": "Стоянка №1",         "task": "Конец смены"},
         ],
     },
     {
         "id": 3, "type": "transfer_machine", "name": "Перегружатель Roadtec SB-2500",
+        "coords": [56.634, 36.352],
+        "speed_kmh": 48,
+        "current_task": "Следует к объекту укладки",
+        "location_type": "transit",
+        "location_name": None,
         "schedule": [
-            {"date": "2026-05-17", "time": "09:00", "location": "ул. Ленина уч.1",    "task": "Подготовка к работе"},
-            {"date": "2026-05-17", "time": "09:30", "location": "ул. Ленина уч.1",    "task": "Перегрузка смеси в укладчик"},
-            {"date": "2026-05-17", "time": "13:00", "location": "ул. Советская уч.2", "task": "Переезд"},
-            {"date": "2026-05-17", "time": "13:30", "location": "ул. Советская уч.2", "task": "Перегрузка смеси"},
-            {"date": "2026-05-17", "time": "16:00", "location": "Стоянка №1",         "task": "Возврат"},
+            {"date": "2026-05-18", "time": "09:00", "location": "102-й км, уч.1",     "task": "Подготовка к работе"},
+            {"date": "2026-05-18", "time": "09:30", "location": "102-й км, уч.1",     "task": "Перегрузка смеси в укладчик"},
+            {"date": "2026-05-18", "time": "13:00", "location": "151-й км, уч.2",     "task": "Переезд"},
+            {"date": "2026-05-18", "time": "13:30", "location": "151-й км, уч.2",     "task": "Перегрузка смеси"},
+            {"date": "2026-05-18", "time": "16:00", "location": "Стоянка №1",         "task": "Возврат"},
         ],
     },
     {
         "id": 4, "type": "paver", "name": "Асфальтоукладчик Vogele SUPER 1800-3i",
+        "coords": [56.390, 36.572],
+        "speed_kmh": 2,
+        "current_task": "Укладка асфальта — полоса 1",
+        "location_type": "transit",
+        "location_name": None,
         "schedule": [
-            {"date": "2026-05-17", "time": "09:30", "location": "ул. Ленина уч.1",    "task": "Укладка полосы 1"},
-            {"date": "2026-05-17", "time": "11:30", "location": "ул. Ленина уч.1",    "task": "Укладка полосы 2"},
-            {"date": "2026-05-17", "time": "13:00", "location": "ул. Советская уч.2", "task": "Переезд"},
-            {"date": "2026-05-17", "time": "13:30", "location": "ул. Советская уч.2", "task": "Укладка"},
-            {"date": "2026-05-17", "time": "16:00", "location": "Стоянка №1",         "task": "Возврат"},
+            {"date": "2026-05-18", "time": "09:30", "location": "102-й км, уч.1",     "task": "Укладка полосы 1"},
+            {"date": "2026-05-18", "time": "11:30", "location": "102-й км, уч.1",     "task": "Укладка полосы 2"},
+            {"date": "2026-05-18", "time": "13:00", "location": "151-й км, уч.2",     "task": "Переезд"},
+            {"date": "2026-05-18", "time": "13:30", "location": "151-й км, уч.2",     "task": "Укладка"},
+            {"date": "2026-05-18", "time": "16:00", "location": "Стоянка №1",         "task": "Возврат"},
         ],
     },
     {
         "id": 5, "type": "roller", "name": "Каток Bomag BW 213 D-5",
+        "coords": [56.391, 36.574],
+        "speed_kmh": 3,
+        "current_task": "Уплотнение покрытия (3 прохода)",
+        "location_type": "transit",
+        "location_name": None,
         "schedule": [
-            {"date": "2026-05-17", "time": "10:00", "location": "ул. Ленина уч.1",    "task": "Уплотнение полосы 1 (3 прохода)"},
-            {"date": "2026-05-17", "time": "12:00", "location": "ул. Ленина уч.1",    "task": "Уплотнение полосы 2"},
-            {"date": "2026-05-17", "time": "13:30", "location": "ул. Советская уч.2", "task": "Переезд"},
-            {"date": "2026-05-17", "time": "14:00", "location": "ул. Советская уч.2", "task": "Уплотнение"},
-            {"date": "2026-05-17", "time": "16:30", "location": "Стоянка №1",         "task": "Возврат"},
+            {"date": "2026-05-18", "time": "10:00", "location": "102-й км, уч.1",     "task": "Уплотнение полосы 1 (3 прохода)"},
+            {"date": "2026-05-18", "time": "12:00", "location": "102-й км, уч.1",     "task": "Уплотнение полосы 2"},
+            {"date": "2026-05-18", "time": "13:30", "location": "151-й км, уч.2",     "task": "Переезд"},
+            {"date": "2026-05-18", "time": "14:00", "location": "151-й км, уч.2",     "task": "Уплотнение"},
+            {"date": "2026-05-18", "time": "16:30", "location": "Стоянка №1",         "task": "Возврат"},
         ],
     },
 ]
@@ -222,48 +262,73 @@ _VEHICLES_P1 = [
 _VEHICLES_P2 = [
     {
         "id": 6, "type": "dump_truck", "name": "Самосвал КамАЗ-65115 №03",
+        "coords": [57.240149, 34.899585],
+        "speed_kmh": 0,
+        "current_task": "Плановое ТО",
+        "location_type": "parking",
+        "location_name": "Стоянка №2",
         "schedule": [
-            {"date": "2026-05-17", "time": "08:30", "location": "Стоянка №2",         "task": "Погрузка на АБЗ №2"},
-            {"date": "2026-05-17", "time": "10:00", "location": "пр. Победы уч.5",    "task": "Выгрузка"},
-            {"date": "2026-05-17", "time": "11:00", "location": "АБЗ №2",             "task": "Погрузка"},
-            {"date": "2026-05-17", "time": "12:30", "location": "ул. Пушкина уч.3",   "task": "Выгрузка"},
-            {"date": "2026-05-17", "time": "15:00", "location": "Стоянка №2",         "task": "Конец смены"},
+            {"date": "2026-05-18", "time": "08:30", "location": "Стоянка №2",         "task": "Погрузка на АБЗ №2"},
+            {"date": "2026-05-18", "time": "10:00", "location": "302-й км, уч.5",     "task": "Выгрузка"},
+            {"date": "2026-05-18", "time": "11:00", "location": "АБЗ №2",             "task": "Погрузка"},
+            {"date": "2026-05-18", "time": "12:30", "location": "302-й км, уч.3",     "task": "Выгрузка"},
+            {"date": "2026-05-18", "time": "15:00", "location": "Стоянка №2",         "task": "Конец смены"},
         ],
     },
     {
         "id": 7, "type": "dump_truck", "name": "Самосвал КамАЗ-65115 №04",
+        "coords": [57.355, 34.625],
+        "speed_kmh": 65,
+        "current_task": "Следует к объекту",
+        "location_type": "transit",
+        "location_name": None,
         "schedule": [
-            {"date": "2026-05-17", "time": "08:30", "location": "Стоянка №2",         "task": "Погрузка на АБЗ №2"},
-            {"date": "2026-05-17", "time": "10:00", "location": "пр. Победы уч.5",    "task": "Выгрузка"},
-            {"date": "2026-05-17", "time": "11:30", "location": "АБЗ №2",             "task": "Погрузка"},
-            {"date": "2026-05-17", "time": "13:00", "location": "пр. Победы уч.5",    "task": "Выгрузка"},
-            {"date": "2026-05-17", "time": "16:00", "location": "Стоянка №2",         "task": "Конец смены"},
+            {"date": "2026-05-18", "time": "08:30", "location": "Стоянка №2",         "task": "Погрузка на АБЗ №2"},
+            {"date": "2026-05-18", "time": "10:00", "location": "302-й км, уч.5",     "task": "Выгрузка"},
+            {"date": "2026-05-18", "time": "11:30", "location": "АБЗ №2",             "task": "Погрузка"},
+            {"date": "2026-05-18", "time": "13:00", "location": "302-й км, уч.5",     "task": "Выгрузка"},
+            {"date": "2026-05-18", "time": "16:00", "location": "Стоянка №2",         "task": "Конец смены"},
         ],
     },
     {
         "id": 8, "type": "transfer_machine", "name": "Перегружатель Vogele MT 3000-2i",
+        "coords": [57.240149, 34.899585],
+        "speed_kmh": 0,
+        "current_task": "Ожидание наряда",
+        "location_type": "parking",
+        "location_name": "Стоянка №2",
         "schedule": [
-            {"date": "2026-05-17", "time": "09:30", "location": "пр. Победы уч.5",    "task": "Перегрузка смеси"},
-            {"date": "2026-05-17", "time": "14:00", "location": "ул. Пушкина уч.3",   "task": "Переезд и перегрузка"},
-            {"date": "2026-05-17", "time": "16:30", "location": "Стоянка №2",         "task": "Возврат"},
+            {"date": "2026-05-18", "time": "09:30", "location": "302-й км, уч.5",     "task": "Перегрузка смеси"},
+            {"date": "2026-05-18", "time": "14:00", "location": "302-й км, уч.3",     "task": "Переезд и перегрузка"},
+            {"date": "2026-05-18", "time": "16:30", "location": "Стоянка №2",         "task": "Возврат"},
         ],
     },
     {
         "id": 9, "type": "paver", "name": "Асфальтоукладчик Bomag BF 600 C-2",
+        "coords": [57.471, 34.349],
+        "speed_kmh": 2,
+        "current_task": "Укладка покрытия — полоса 2",
+        "location_type": "transit",
+        "location_name": None,
         "schedule": [
-            {"date": "2026-05-17", "time": "09:30", "location": "пр. Победы уч.5",    "task": "Укладка полосы 1"},
-            {"date": "2026-05-17", "time": "12:00", "location": "пр. Победы уч.5",    "task": "Укладка полосы 3"},
-            {"date": "2026-05-17", "time": "14:00", "location": "ул. Пушкина уч.3",   "task": "Укладка"},
-            {"date": "2026-05-17", "time": "16:30", "location": "Стоянка №2",         "task": "Возврат"},
+            {"date": "2026-05-18", "time": "09:30", "location": "302-й км, уч.5",     "task": "Укладка полосы 1"},
+            {"date": "2026-05-18", "time": "12:00", "location": "302-й км, уч.5",     "task": "Укладка полосы 3"},
+            {"date": "2026-05-18", "time": "14:00", "location": "302-й км, уч.3",     "task": "Укладка"},
+            {"date": "2026-05-18", "time": "16:30", "location": "Стоянка №2",         "task": "Возврат"},
         ],
     },
     {
         "id": 10, "type": "roller", "name": "Каток Hamm HD 14 VV",
+        "coords": [57.240149, 34.899585],
+        "speed_kmh": 0,
+        "current_task": "Обслуживание",
+        "location_type": "parking",
+        "location_name": "Стоянка №2",
         "schedule": [
-            {"date": "2026-05-17", "time": "10:00", "location": "пр. Победы уч.5",    "task": "Уплотнение"},
-            {"date": "2026-05-17", "time": "13:00", "location": "пр. Победы уч.5",    "task": "Контрольные проходы"},
-            {"date": "2026-05-17", "time": "14:30", "location": "ул. Пушкина уч.3",   "task": "Уплотнение"},
-            {"date": "2026-05-17", "time": "17:00", "location": "Стоянка №2",         "task": "Возврат"},
+            {"date": "2026-05-18", "time": "10:00", "location": "302-й км, уч.5",     "task": "Уплотнение"},
+            {"date": "2026-05-18", "time": "13:00", "location": "302-й км, уч.5",     "task": "Контрольные проходы"},
+            {"date": "2026-05-18", "time": "14:30", "location": "302-й км, уч.3",     "task": "Уплотнение"},
+            {"date": "2026-05-18", "time": "17:00", "location": "Стоянка №2",         "task": "Возврат"},
         ],
     },
 ]
@@ -283,16 +348,10 @@ def _lerp(p1, p2, t):
 
 
 def _compute_lane_polygons(polygon, lanes):
-    """
-    Divide a road polygon transversely into equal strips — one per lane.
-    Convention: first ceil(n/2) points form the left edge (road start→end),
-    remaining points form the right edge in reverse (road end→start).
-    Each lane strip is returned as a 4-point sub-polygon.
-    """
     if not lanes or not polygon:
         return []
     n = len(polygon)
-    half = (n + 1) // 2          # ceiling → left edge point count
+    half = (n + 1) // 2
     left_start  = polygon[0]
     left_end    = polygon[half - 1]
     right_end   = polygon[half]
@@ -313,11 +372,23 @@ def _compute_lane_polygons(polygon, lanes):
     return result
 
 
+def _vehicle_summary(v):
+    return {
+        "id":            v["id"],
+        "type":          v["type"],
+        "name":          v["name"],
+        "coords":        v.get("coords"),
+        "speed_kmh":     v.get("speed_kmh", 0),
+        "current_task":  v.get("current_task"),
+        "location_type": v.get("location_type"),
+        "location_name": v.get("location_name"),
+    }
+
+
 # ─── Endpoints ────────────────────────────────────────────────────────────────
 
 @app.get("/api/roads")
 def get_roads():
-    print("GET /api/roads")
     return [
         {
             "id": r["id"],
@@ -334,7 +405,6 @@ def get_roads():
 
 @app.get("/api/roads/{road_id}")
 def get_road(road_id: int):
-    print(f"GET /api/roads/{road_id}")
     road = next((r for r in ROADS if r["id"] == road_id), None)
     if not road:
         raise HTTPException(status_code=404, detail="Road not found")
@@ -343,7 +413,6 @@ def get_road(road_id: int):
 
 @app.get("/api/factories")
 def get_factories():
-    print("GET /api/factories")
     return [
         {k: v for k, v in f.items() if k != "vehicles"}
         for f in FACTORIES
@@ -352,7 +421,6 @@ def get_factories():
 
 @app.get("/api/factories/{factory_id}")
 def get_factory(factory_id: str):
-    print(f"GET /api/factories/{factory_id}")
     factory = next((f for f in FACTORIES if f["id"] == factory_id), None)
     if not factory:
         raise HTTPException(status_code=404, detail="Factory not found")
@@ -361,7 +429,6 @@ def get_factory(factory_id: str):
 
 @app.get("/api/parkings")
 def get_parkings():
-    print("GET /api/parkings")
     return [
         {
             "id": p["id"],
@@ -375,16 +442,17 @@ def get_parkings():
 
 @app.get("/api/parkings/{parking_id}")
 def get_parking(parking_id: int):
-    print(f"GET /api/parkings/{parking_id}")
     parking = next((p for p in PARKINGS if p["id"] == parking_id), None)
     if not parking:
         raise HTTPException(status_code=404, detail="Parking not found")
-    return parking
+    return {
+        **parking,
+        "vehicles": [_vehicle_summary(v) for v in parking["vehicles"]],
+    }
 
 
 @app.get("/api/lanes")
 def get_all_lanes():
-    print("GET /api/lanes")
     result = []
     for road in ROADS:
         for lane in road["lanes"]:
@@ -406,14 +474,12 @@ def get_all_lanes():
 
 @app.get("/api/vehicles")
 def get_all_vehicles(type: str = None):
-    print(f"GET /api/vehicles type={type}")
     result = _ALL_VEHICLES if not type else [v for v in _ALL_VEHICLES if v["type"] == type]
-    return result
+    return [_vehicle_summary(v) for v in result]
 
 
 @app.get("/api/vehicles/{vehicle_id}")
 def get_vehicle(vehicle_id: int):
-    print(f"GET /api/vehicles/{vehicle_id}")
     v = next((v for v in _ALL_VEHICLES if v["id"] == vehicle_id), None)
     if not v:
         raise HTTPException(status_code=404, detail="Vehicle not found")
@@ -427,7 +493,6 @@ class PlanRequest(BaseModel):
 
 @app.post("/api/plans")
 def create_plan(req: PlanRequest):
-    print(f"POST /api/plans road_id={req.road_id} lane_id={req.lane_id}")
     road = next((r for r in ROADS if r["id"] == req.road_id), None)
     if not road:
         raise HTTPException(status_code=404, detail="Road not found")
@@ -435,7 +500,7 @@ def create_plan(req: PlanRequest):
 
     def suggest(type_key, count):
         return [
-            {"id": v["id"], "name": v["name"], "type": v["type"]}
+            _vehicle_summary(v)
             for v in _ALL_VEHICLES if v["type"] == type_key
         ][:count]
 
@@ -454,17 +519,14 @@ def create_plan(req: PlanRequest):
             "closure_vehicle":  suggest("closure_vehicle", 1),
         },
     }
-    print(f"  → plan: dump_trucks={dump_truck_count}")
     return plan
 
 
 @app.post("/api/auth/register")
 def register(body: dict):
-    print(f"POST /api/auth/register username={body.get('username')}")
     return {"ok": True, "message": "Регистрация успешна"}
 
 
 @app.post("/api/auth/login")
 def login(body: dict):
-    print(f"POST /api/auth/login username={body.get('username')}")
     return {"ok": True, "message": "Вход выполнен"}
