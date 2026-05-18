@@ -1,7 +1,10 @@
 import { useState } from 'react';
+import axios from 'axios';
 import LinePanel from './LinePanel.jsx';
 import PlanPanel from './PlanPanel.jsx';
 import RoadScheme from './RoadScheme.jsx';
+
+const API = 'http://localhost:8000/api';
 
 function pluralDays(n) {
   if (n % 100 >= 11 && n % 100 <= 19) return 'дней';
