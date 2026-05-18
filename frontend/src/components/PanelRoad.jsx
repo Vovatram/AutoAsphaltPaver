@@ -204,6 +204,8 @@ export default function PanelRoad({ road, dark, onClose, polyEdit, onStartPolyEd
           submitting={planning}
         />
       )}
+
+      {showAnim && <RepairAnimation onClose={() => setShowAnim(false)} />}
     </div>
   );
 }
