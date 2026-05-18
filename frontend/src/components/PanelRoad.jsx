@@ -15,9 +15,10 @@ function pluralDays(n) {
   return 'дней';
 }
 
-export default function PanelRoad({ road, dark, onClose, polyEdit, onStartPolyEdit, onUndoPolyEdit, onFinishPolyEdit, onCancelPolyEdit }) {
+export default function PanelRoad({ road, dark, onClose, polyEdit, onStartPolyEdit, onUndoPolyEdit, onFinishPolyEdit, onCancelPolyEdit, onRepairStarted }) {
   const [selectedLane, setSelectedLane] = useState(null);
   const [showPlan, setShowPlan] = useState(false);
+  const [showAnim, setShowAnim] = useState(false);
 
   const days = Math.ceil(road.repair_hours / 24);
 
@@ -38,6 +39,8 @@ export default function PanelRoad({ road, dark, onClose, polyEdit, onStartPolyEd
     }
     setShowPlan(false);
     setSelectedLane(null);
+    setShowAnim(true);
+    onRepairStarted?.();
   };
 
   return (
