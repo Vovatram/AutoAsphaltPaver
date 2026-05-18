@@ -20,8 +20,21 @@ export default function PanelRoad({ road, dark, onClose, polyEdit, onStartPolyEd
 
   const days = Math.ceil(road.repair_hours / 24);
 
-  const handleDone = (plan) => {
-    console.log('Задание сформировано:', plan);
+  const [planning, setPlanning] = useState(false);
+
+  const handleDone = async (plan) => {
+    setPlanning(true);
+    try {
+      await axios.post(`${API}/repair/plan`, {
+        road_id: road.id,
+        lane_id: selectedLane.id,
+        window:  plan.window ?? '',
+      });
+    } catch (e) {
+      console.error('Ошибка расчёта плана:', e);
+    } finally {
+      setPlanning(false);
+    }
     setShowPlan(false);
     setSelectedLane(null);
   };
