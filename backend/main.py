@@ -182,6 +182,33 @@ FACTORIES = [
     },
 ]
 
+_CLOSURE_VEHICLES = [
+    {
+        "id": 14, "type": "closure_vehicle", "name": "Спецавт. перекрытия КамАЗ-43118 №01",
+        "coords": [56.564175, 36.442860],
+        "speed_kmh": 0,
+        "current_task": "Ожидание наряда",
+        "location_type": "parking",
+        "location_name": "Стоянка №1",
+        "schedule": [
+            {"date": "2026-05-18", "time": "07:40", "location": "102-й км", "task": "Перекрытие дороги"},
+            {"date": "2026-05-18", "time": "12:00", "location": "Стоянка №1", "task": "Возврат"},
+        ],
+    },
+    {
+        "id": 15, "type": "closure_vehicle", "name": "Спецавт. перекрытия МАЗ-5340 №02",
+        "coords": [57.240149, 34.899585],
+        "speed_kmh": 0,
+        "current_task": "Ожидание наряда",
+        "location_type": "parking",
+        "location_name": "Стоянка №2",
+        "schedule": [
+            {"date": "2026-05-18", "time": "11:10", "location": "302-й км", "task": "Перекрытие дороги"},
+            {"date": "2026-05-18", "time": "13:00", "location": "Стоянка №2", "task": "Возврат"},
+        ],
+    },
+]
+
 _VEHICLES_P1 = [
     {
         "id": 1, "type": "dump_truck", "name": "Самосвал КамАЗ-6522 №01",
