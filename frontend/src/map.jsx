@@ -149,6 +149,7 @@ export default function MapPage() {
       setRoads(r.data);
       setFactories(f.data);
       setParkings(p.data);
+      setVehicles(v.data);
       const counts = {};
       v.data.forEach(vh => { counts[vh.type] = (counts[vh.type] || 0) + 1; });
       setVehicleCounts(counts);
