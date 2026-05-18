@@ -5,6 +5,8 @@ import LeftPanel from './components/LeftPanel.jsx';
 import PanelRoad from './components/PanelRoad.jsx';
 import PanelVehicle, { VEHICLE_ICON } from './components/PanelVehicle.jsx';
 import LineInformation from './components/LineInformation.jsx';
+import TaskPanel from './components/TaskPanel.jsx';
+import TaskLine from './components/TaskLine.jsx';
 
 const API = 'http://localhost:8000/api';
 const MAP_CENTER = [57.0, 35.5];
