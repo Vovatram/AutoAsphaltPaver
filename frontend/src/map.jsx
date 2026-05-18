@@ -247,6 +247,13 @@ export default function MapPage() {
     setPanel({ type: 'fleet', data: { vehicles: data, typeName, typeIcon } });
   };
 
+  const openTasks = () => { setPanel(null); cancelPolyEdit(); setTaskView('list'); };
+  const openTaskDetail = async (id) => {
+    const { data } = await axios.get(`${API}/tasks/${id}`);
+    setTaskView(data);
+  };
+  const closeTasks = () => setTaskView(null);
+
   const closePanel = () => { setPanel(null); cancelPolyEdit(); };
 
   return (
