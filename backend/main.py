@@ -583,6 +583,51 @@ def create_plan(req: PlanRequest):
     return plan
 
 
+@app.get("/api/tasks")
+def get_tasks():
+    return [
+        {
+            "id":            t["id"],
+            "road_name":     t["road_name"],
+            "lane_name":     t["lane_name"],
+            "direction":     t["direction"],
+            "condition":     t["condition"],
+            "window":        t["window"],
+            "date":          t["date"],
+            "start_time":    t["start_time"],
+            "end_time":      t["end_time"],
+            "status":        t["status"],
+            "vehicle_count": len(t["vehicle_ids_roles"]),
+        }
+        for t in TASKS
+    ]
+
+
+@app.get("/api/tasks/{task_id}")
+def get_task(task_id: int):
+    task = next((t for t in TASKS if t["id"] == task_id), None)
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    vehicles = []
+    for vr in task["vehicle_ids_roles"]:
+        v = next((v for v in _ALL_VEHICLES if v["id"] == vr["vehicle_id"]), None)
+        if v:
+            vehicles.append({**_vehicle_summary(v), "role": vr["role"]})
+    return {
+        "id":         task["id"],
+        "road_name":  task["road_name"],
+        "lane_name":  task["lane_name"],
+        "direction":  task["direction"],
+        "condition":  task["condition"],
+        "window":     task["window"],
+        "date":       task["date"],
+        "start_time": task["start_time"],
+        "end_time":   task["end_time"],
+        "status":     task["status"],
+        "vehicles":   vehicles,
+    }
+
+
 @app.post("/api/auth/register")
 def register(body: dict):
     return {"ok": True, "message": "Регистрация успешна"}
