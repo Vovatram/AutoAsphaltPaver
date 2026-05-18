@@ -231,6 +231,10 @@ export default function MapPage() {
     if (factory && mapRef.current) mapRef.current.setCenter(factory.coords, 13, { duration: 600, checkZoomRange: true });
   };
 
+  const flyToVehicle = (coords) => {
+    if (coords && mapRef.current) mapRef.current.setCenter(coords, 16, { duration: 600, checkZoomRange: true });
+  };
+
   const openFactory    = async (id) => { const { data } = await axios.get(`${API}/factories/${id}`); setPanel({ type: 'factory', data }); };
   const openVehicleType = async (type, typeName, typeIcon) => {
     const { data } = await axios.get(`${API}/vehicles`, { params: { type } });
