@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from road_repair_system import plan_repair
 
 app = FastAPI(title="AutoAsphaltPaver API")
 
