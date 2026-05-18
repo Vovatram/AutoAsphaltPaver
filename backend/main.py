@@ -340,6 +340,67 @@ PARKINGS = [
 
 _ALL_VEHICLES = _VEHICLES_P1 + _VEHICLES_P2 + _VEHICLES_F1 + _VEHICLES_F3
 
+TASKS = [
+    {
+        "id": 1,
+        "road_id": 1,
+        "road_name": "102-й километр",
+        "lane_id": 2,
+        "lane_name": "Полоса 2",
+        "direction": "На Санкт-Петербург",
+        "condition": "Плохое",
+        "window": "08:00–12:00",
+        "date": "2026-05-18",
+        "start_time": "08:00",
+        "end_time": "12:00",
+        "status": "in_progress",
+        "vehicle_ids_roles": [
+            {"vehicle_id": 4,  "role": "Укладка асфальта"},
+            {"vehicle_id": 5,  "role": "Уплотнение покрытия"},
+            {"vehicle_id": 3,  "role": "Перегрузка смеси"},
+            {"vehicle_id": 1,  "role": "Подвоз материала"},
+            {"vehicle_id": 2,  "role": "Подвоз материала"},
+        ],
+    },
+    {
+        "id": 2,
+        "road_id": 4,
+        "road_name": "302-й километр",
+        "lane_id": 1,
+        "lane_name": "Полоса 1",
+        "direction": "На Санкт-Петербург",
+        "condition": "Плохое",
+        "window": "07:00–13:00",
+        "date": "2026-05-18",
+        "start_time": "11:30",
+        "end_time": "13:00",
+        "status": "planned",
+        "vehicle_ids_roles": [
+            {"vehicle_id": 9,  "role": "Укладка асфальта"},
+            {"vehicle_id": 7,  "role": "Подвоз материала"},
+        ],
+    },
+    {
+        "id": 3,
+        "road_id": 5,
+        "road_name": "151-й километр",
+        "lane_id": 1,
+        "lane_name": "Полоса 1",
+        "direction": "На Санкт-Петербург",
+        "condition": "Удовлетворительное",
+        "window": "15:00–18:00",
+        "date": "2026-05-18",
+        "start_time": "15:00",
+        "end_time": "18:00",
+        "status": "planned",
+        "vehicle_ids_roles": [
+            {"vehicle_id": 8,  "role": "Перегрузка смеси"},
+            {"vehicle_id": 6,  "role": "Подвоз материала"},
+            {"vehicle_id": 10, "role": "Уплотнение покрытия"},
+        ],
+    },
+]
+
 
 # ─── Helpers ──────────────────────────────────────────────────────────────────
 
