@@ -118,7 +118,7 @@ export default function PlanPanel({ road, lane, onClose, onDone, submitting = fa
   const removeVehicle = (type, id) => setSelected(s => ({ ...s, [type]: s[type].filter(v => v.id !== id) }));
 
   const totalSelected = Object.values(selected).reduce((n, arr) => n + arr.length, 0);
-  const canSubmit = !loading && totalSelected > 0 && (windows.length === 0 || selectedWindow !== null);
+  const canSubmit = !loading && !submitting && totalSelected > 0 && (windows.length === 0 || selectedWindow !== null);
 
   return (
     <div className="absolute inset-0 z-30 bg-black/50 flex items-center justify-center p-4">
