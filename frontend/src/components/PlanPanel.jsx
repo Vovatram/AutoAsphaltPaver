@@ -11,23 +11,43 @@ const VEHICLE_TYPES = [
   { type: 'closure_vehicle',  icon: '🚧', label: 'Спецавтомобиль перекрытия дороги' },
 ];
 
+function vehicleLocation(v) {
+  if (!v.location_type) return null;
+  if (v.location_type === 'transit') {
+    if (v.coords) return `в пути (${v.coords[0].toFixed(4)}, ${v.coords[1].toFixed(4)})`;
+    return 'в пути';
+  }
+  return v.location_name ?? null;
+}
+
 function VehicleSelector({ vehicleType, allVehicles, selected, onAdd, onRemove }) {
   const pool = allVehicles[vehicleType] || [];
   const available = pool.filter(v => !selected.some(s => s.id === v.id));
 
   return (
     <div className="space-y-1.5">
-      {selected.map(v => (
-        <div key={v.id} className="flex items-center justify-between bg-orange-50 border border-orange-200 rounded-lg px-2.5 py-1.5 gap-2">
-          <span className="text-xs font-medium text-gray-800 truncate">{v.name}</span>
-          <button
-            onClick={() => onRemove(v.id)}
-            className="text-gray-300 hover:text-red-500 transition-colors shrink-0 text-sm leading-none"
-          >
-            ✕
-          </button>
-        </div>
-      ))}
+      {selected.map(v => {
+        const loc = vehicleLocation(v);
+        const isTransit = v.location_type === 'transit';
+        return (
+          <div key={v.id} className="flex items-start justify-between bg-orange-50 border border-orange-200 rounded-lg px-2.5 py-1.5 gap-2">
+            <div className="min-w-0">
+              <p className="text-xs font-medium text-gray-800 truncate">{v.name}</p>
+              {loc && (
+                <p className={`text-xs mt-0.5 ${isTransit ? 'text-blue-600 font-mono' : 'text-gray-500'}`}>
+                  {loc}
+                </p>
+              )}
+            </div>
+            <button
+              onClick={() => onRemove(v.id)}
+              className="text-gray-300 hover:text-red-500 transition-colors shrink-0 text-sm leading-none mt-0.5"
+            >
+              ✕
+            </button>
+          </div>
+        );
+      })}
 
       {available.length > 0 ? (
         <select
@@ -42,7 +62,9 @@ function VehicleSelector({ vehicleType, allVehicles, selected, onAdd, onRemove }
         >
           <option value="">+ Добавить технику...</option>
           {available.map(v => (
-            <option key={v.id} value={v.id}>{v.name}</option>
+            <option key={v.id} value={v.id}>
+              {v.name}{vehicleLocation(v) ? ` — ${vehicleLocation(v)}` : ''}
+            </option>
           ))}
         </select>
       ) : selected.length === 0 ? (
