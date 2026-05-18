@@ -207,8 +207,10 @@ export default function MapPage() {
         onToggleDark={() => setDark(d => !d)}
         roads={roads}
         parkings={parkings}
+        factories={factories}
         onSelectRoad={openRoad}
         onSelectParking={openParking}
+        onSelectFactory={(id) => { flyToFactory(id); openFactory(id); }}
         onSelectVehicleType={openVehicleType}
         onShowLanes={() => setShowLanes(true)}
         vehicleCounts={vehicleCounts}
