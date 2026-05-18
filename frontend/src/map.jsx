@@ -3,7 +3,7 @@ import { YMaps, Map, Placemark, Polygon, useYMaps } from '@pbe/react-yandex-maps
 import axios from 'axios';
 import LeftPanel from './components/LeftPanel.jsx';
 import PanelRoad from './components/PanelRoad.jsx';
-import PanelVehicle from './components/PanelVehicle.jsx';
+import PanelVehicle, { VEHICLE_ICON } from './components/PanelVehicle.jsx';
 import LineInformation from './components/LineInformation.jsx';
 
 const API = 'http://localhost:8000/api';
