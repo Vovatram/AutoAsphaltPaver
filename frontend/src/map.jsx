@@ -398,6 +398,13 @@ export default function MapPage() {
         {(panel?.type === 'parking' || panel?.type === 'factory' || panel?.type === 'fleet' || panel?.type === 'vehicle') && (
           <PanelVehicle panel={panel} dark={dark} onClose={() => setPanel(null)} onSelectVehicle={openVehicle} onFlyToVehicle={flyToVehicle} />
         )}
+
+        {taskView === 'list' && (
+          <TaskPanel tasks={tasks} onClose={closeTasks} onSelectTask={openTaskDetail} />
+        )}
+        {taskView && taskView !== 'list' && (
+          <TaskLine task={taskView} onClose={closeTasks} onBack={() => setTaskView('list')} />
+        )}
       </div>
     </div>
   );
