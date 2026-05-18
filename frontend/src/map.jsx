@@ -187,6 +187,11 @@ export default function MapPage() {
   };
   const openParking    = async (id) => { const { data } = await axios.get(`${API}/parkings/${id}`);  setPanel({ type: 'parking', data }); };
   const openVehicle    = async (id) => { const { data } = await axios.get(`${API}/vehicles/${id}`);  setPanel({ type: 'vehicle', data }); };
+  const flyToFactory = (id) => {
+    const factory = factories.find(f => f.id === id);
+    if (factory && mapRef.current) mapRef.current.setCenter(factory.coords, 13, { duration: 600, checkZoomRange: true });
+  };
+
   const openFactory    = async (id) => { const { data } = await axios.get(`${API}/factories/${id}`); setPanel({ type: 'factory', data }); };
   const openVehicleType = async (type, typeName, typeIcon) => {
     const { data } = await axios.get(`${API}/vehicles`, { params: { type } });
