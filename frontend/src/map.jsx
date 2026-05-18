@@ -136,6 +136,7 @@ export default function MapPage() {
   const [panel, setPanel] = useState(null);
   const [showLanes, setShowLanes] = useState(false);
   const [vehicleCounts, setVehicleCounts] = useState({});
+  const [vehicles, setVehicles] = useState([]);
   const [polyEdit, setPolyEdit] = useState(null);
 
   useEffect(() => {
