@@ -381,7 +381,7 @@ export default function MapPage() {
         )}
 
         {(panel?.type === 'parking' || panel?.type === 'factory' || panel?.type === 'fleet' || panel?.type === 'vehicle') && (
-          <PanelVehicle panel={panel} dark={dark} onClose={() => setPanel(null)} onSelectVehicle={openVehicle} />
+          <PanelVehicle panel={panel} dark={dark} onClose={() => setPanel(null)} onSelectVehicle={openVehicle} onFlyToVehicle={flyToVehicle} />
         )}
       </div>
     </div>
