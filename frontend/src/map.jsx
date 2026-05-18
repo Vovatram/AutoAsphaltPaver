@@ -10,6 +10,15 @@ const API = 'http://localhost:8000/api';
 const MAP_CENTER = [57.0, 35.5];
 const MAP_ZOOM = 7;
 
+// Condition → fill color (hex)
+const COND_COLOR = {
+  'Хорошее':            '#22c55e',
+  'Удовлетворительное': '#eab308',
+  'Плохое':             '#f97316',
+  'Критическое':        '#ef4444',
+};
+const COLOR_NO_WINDOW = '#3b82f6'; // blue — no weather windows
+
 function makeIconHtml(emoji, name, count) {
   const badge = count > 0
     ? `<div style="position:absolute;top:-6px;right:-8px;background:#dc2626;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 3px;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.35)">${count}</div>`
@@ -28,8 +37,8 @@ function RoadLabel({ road, isActive, onClick }) {
 
   const layout = useMemo(() => {
     if (!ymaps?.templateLayoutFactory) return null;
-    const bg = isActive ? 'rgba(234,88,12,0.95)' : 'rgba(249,115,22,0.88)';
-    const border = isActive ? '#7c2d12' : '#c2410c';
+    const bg = isActive ? 'rgba(234,88,12,0.95)' : 'rgba(30,30,30,0.80)';
+    const border = isActive ? '#7c2d12' : '#475569';
     const shadow = isActive ? '0 2px 8px rgba(124,45,18,.5)' : '0 1px 4px rgba(0,0,0,.3)';
     return ymaps.templateLayoutFactory.createClass(
       `<div style="transform:translate(-50%,-100%);cursor:pointer;text-align:center">` +
@@ -62,24 +71,17 @@ function RoadLabel({ road, isActive, onClick }) {
 
 function FactoryMarker({ factory, onClick }) {
   const ymaps = useYMaps(['templateLayoutFactory']);
-
   const layout = useMemo(() => {
     if (!ymaps?.templateLayoutFactory) return null;
     return ymaps.templateLayoutFactory.createClass(
       makeIconHtml('🏭', factory.name, factory.vehicle_count)
     );
   }, [ymaps, factory.name, factory.vehicle_count]);
-
   if (!layout) return null;
-
   return (
     <Placemark
       geometry={factory.coords}
-      options={{
-        iconLayout: layout,
-        iconShape: { type: 'Rectangle', coordinates: [[-70, -65], [70, 8]] },
-        openBalloonOnClick: false,
-      }}
+      options={{ iconLayout: layout, iconShape: { type: 'Rectangle', coordinates: [[-70, -65], [70, 8]] }, openBalloonOnClick: false }}
       properties={{ hintContent: factory.capacity_t_per_hour != null ? `${factory.name} — ${factory.capacity_t_per_hour} т/ч` : factory.name }}
       onClick={onClick}
     />
@@ -88,24 +90,17 @@ function FactoryMarker({ factory, onClick }) {
 
 function ParkingMarker({ parking, onClick }) {
   const ymaps = useYMaps(['templateLayoutFactory']);
-
   const layout = useMemo(() => {
     if (!ymaps?.templateLayoutFactory) return null;
     return ymaps.templateLayoutFactory.createClass(
       makeIconHtml('🅿️', parking.name, parking.vehicle_count)
     );
   }, [ymaps, parking.name, parking.vehicle_count]);
-
   if (!layout) return null;
-
   return (
     <Placemark
       geometry={parking.coords}
-      options={{
-        iconLayout: layout,
-        iconShape: { type: 'Rectangle', coordinates: [[-70, -65], [70, 8]] },
-        openBalloonOnClick: false,
-      }}
+      options={{ iconLayout: layout, iconShape: { type: 'Rectangle', coordinates: [[-70, -65], [70, 8]] }, openBalloonOnClick: false }}
       properties={{ hintContent: `${parking.name} — ${parking.vehicle_count} ед. техники` }}
       onClick={onClick}
     />
@@ -122,18 +117,11 @@ function EditDotMarker({ point, index }) {
       `font-size:9px;font-weight:700;color:#fff;box-shadow:0 1px 4px rgba(0,0,0,.5);cursor:default">${index + 1}</div>`
     );
   }, [ymaps, index]);
-
   if (!layout) return null;
-
   return (
     <Placemark
       geometry={point}
-      options={{
-        iconLayout: layout,
-        iconShape: { type: 'Circle', coordinates: [0, 0], radius: 10 },
-        openBalloonOnClick: false,
-        zIndex: 60,
-      }}
+      options={{ iconLayout: layout, iconShape: { type: 'Circle', coordinates: [0, 0], radius: 10 }, openBalloonOnClick: false, zIndex: 60 }}
       properties={{ hintContent: `Точка ${index + 1}: [${point[0].toFixed(6)}, ${point[1].toFixed(6)}]` }}
     />
   );
@@ -148,7 +136,7 @@ export default function MapPage() {
   const [panel, setPanel] = useState(null);
   const [showLanes, setShowLanes] = useState(false);
   const [vehicleCounts, setVehicleCounts] = useState({});
-  const [polyEdit, setPolyEdit] = useState(null); // null | { roadId, points: [[lat,lng],...] }
+  const [polyEdit, setPolyEdit] = useState(null);
 
   useEffect(() => {
     Promise.all([
@@ -166,20 +154,14 @@ export default function MapPage() {
     }).catch(console.error);
   }, []);
 
-  // ── Polygon editor ─────────────────────────────────────────────────────────
+  // ── Polygon editor ──────────────────────────────────────────────────────────
   const addPolyPoint = (e) => {
     if (!polyEdit) return;
-    const coords = e.get('coords');
-    setPolyEdit(prev => prev ? { ...prev, points: [...prev.points, coords] } : null);
+    setPolyEdit(prev => prev ? { ...prev, points: [...prev.points, e.get('coords')] } : null);
   };
-
-  const startPolyEdit = (roadId) => setPolyEdit({ roadId, points: [] });
-
-  const undoPolyEdit = () =>
-    setPolyEdit(prev => prev ? { ...prev, points: prev.points.slice(0, -1) } : null);
-
+  const startPolyEdit  = (roadId) => setPolyEdit({ roadId, points: [] });
+  const undoPolyEdit   = () => setPolyEdit(prev => prev ? { ...prev, points: prev.points.slice(0, -1) } : null);
   const cancelPolyEdit = () => setPolyEdit(null);
-
   const finishPolyEdit = () => {
     const pts = polyEdit?.points ?? [];
     if (pts.length >= 3) {
@@ -195,9 +177,7 @@ export default function MapPage() {
 
   const flyToRoad = (id) => {
     const road = roads.find(r => r.id === id);
-    if (road && mapRef.current) {
-      mapRef.current.setCenter(road.coords, 14, { duration: 600, checkZoomRange: true });
-    }
+    if (road && mapRef.current) mapRef.current.setCenter(road.coords, 14, { duration: 600, checkZoomRange: true });
   };
 
   const openRoad = async (id) => {
@@ -205,22 +185,9 @@ export default function MapPage() {
     const { data } = await axios.get(`${API}/roads/${id}`);
     setPanel({ type: 'road', data });
   };
-
-  const openParking = async (id) => {
-    const { data } = await axios.get(`${API}/parkings/${id}`);
-    setPanel({ type: 'parking', data });
-  };
-
-  const openVehicle = async (id) => {
-    const { data } = await axios.get(`${API}/vehicles/${id}`);
-    setPanel({ type: 'vehicle', data });
-  };
-
-  const openFactory = async (id) => {
-    const { data } = await axios.get(`${API}/factories/${id}`);
-    setPanel({ type: 'factory', data });
-  };
-
+  const openParking    = async (id) => { const { data } = await axios.get(`${API}/parkings/${id}`);  setPanel({ type: 'parking', data }); };
+  const openVehicle    = async (id) => { const { data } = await axios.get(`${API}/vehicles/${id}`);  setPanel({ type: 'vehicle', data }); };
+  const openFactory    = async (id) => { const { data } = await axios.get(`${API}/factories/${id}`); setPanel({ type: 'factory', data }); };
   const openVehicleType = async (type, typeName, typeIcon) => {
     const { data } = await axios.get(`${API}/vehicles`, { params: { type } });
     setPanel({ type: 'fleet', data: { vehicles: data, typeName, typeIcon } });
@@ -229,10 +196,7 @@ export default function MapPage() {
   const closePanel = () => { setPanel(null); cancelPolyEdit(); };
 
   return (
-    <div
-      className="flex h-screen w-screen overflow-hidden"
-      style={dark ? { filter: 'invert(1) hue-rotate(180deg)' } : {}}
-    >
+    <div className="flex h-screen w-screen overflow-hidden" style={dark ? { filter: 'invert(1) hue-rotate(180deg)' } : {}}>
       <LeftPanel
         dark={dark}
         onToggleDark={() => setDark(d => !d)}
@@ -255,64 +219,76 @@ export default function MapPage() {
             instanceRef={mapRef}
             onClick={addPolyPoint}
           >
-            {/* Road polygons + label markers */}
+            {/* Road lane polygons */}
             {roads.map(r => {
               const isActive = panel?.type === 'road' && panel.data?.id === r.id;
+              const hasWindows = r.weather_windows?.length > 0;
+              const fillOpacity = isActive ? 0.90 : 0.72;
+
+              const handleClick = (e) => polyEdit ? addPolyPoint(e) : openRoad(r.id);
+
+              const lanePolygons = (r.lane_polygons ?? []).map(lp => {
+                const lane = r.lanes?.find(l => l.id === lp.lane_id);
+                const fill = hasWindows ? (COND_COLOR[lane?.condition] ?? '#94a3b8') : COLOR_NO_WINDOW;
+                return (
+                  <Polygon
+                    key={`road-lane-${r.id}-${lp.lane_id}`}
+                    geometry={[lp.polygon]}
+                    options={{
+                      fillColor: fill,
+                      fillOpacity,
+                      strokeColor: '#ffffff',
+                      strokeOpacity: 0.25,
+                      strokeWidth: 0.5,
+                      openBalloonOnClick: false,
+                      zIndex: isActive ? 10 : 1,
+                    }}
+                    properties={{ hintContent: lane ? `${r.name} · ${lane.name} (${lane.condition})` : r.name }}
+                    onClick={handleClick}
+                  />
+                );
+              });
+
               return [
+                ...lanePolygons,
+                // Road boundary outline
                 <Polygon
-                  key={`road-poly-${r.id}`}
+                  key={`road-outline-${r.id}`}
                   geometry={[r.polygon]}
                   options={{
-                    fillColor: isActive ? '#ea580c' : '#f97316',
-                    strokeColor: isActive ? '#7c2d12' : '#c2410c',
-                    fillOpacity: isActive ? 0.85 : 0.55,
-                    strokeWidth: isActive ? 4 : 2,
+                    fillOpacity: 0,
+                    strokeColor: isActive ? '#ffffff' : '#1e293b',
+                    strokeOpacity: isActive ? 0.9 : 0.5,
+                    strokeWidth: isActive ? 2 : 1,
                     openBalloonOnClick: false,
-                    zIndex: isActive ? 10 : 1,
+                    zIndex: isActive ? 12 : 2,
                   }}
-                  properties={{ hintContent: r.name }}
-                  onClick={(e) => polyEdit ? addPolyPoint(e) : openRoad(r.id)}
+                  onClick={handleClick}
                 />,
                 <RoadLabel
                   key={`road-label-${r.id}`}
                   road={r}
                   isActive={isActive}
-                  onClick={(e) => polyEdit ? addPolyPoint(e) : openRoad(r.id)}
+                  onClick={handleClick}
                 />,
               ];
             })}
 
             {/* Factory markers */}
             {factories.map(f => (
-              <FactoryMarker
-                key={`factory-${f.id}`}
-                factory={f}
-                onClick={(e) => polyEdit ? addPolyPoint(e) : openFactory(f.id)}
-              />
+              <FactoryMarker key={`factory-${f.id}`} factory={f} onClick={(e) => polyEdit ? addPolyPoint(e) : openFactory(f.id)} />
             ))}
 
             {/* Parking markers */}
             {parkings.map(p => (
-              <ParkingMarker
-                key={`parking-${p.id}`}
-                parking={p}
-                onClick={(e) => polyEdit ? addPolyPoint(e) : openParking(p.id)}
-              />
+              <ParkingMarker key={`parking-${p.id}`} parking={p} onClick={(e) => polyEdit ? addPolyPoint(e) : openParking(p.id)} />
             ))}
 
-            {/* Polygon editor — preview */}
+            {/* Polygon editor preview */}
             {polyEdit?.points.length >= 3 && (
               <Polygon
                 geometry={[polyEdit.points]}
-                options={{
-                  fillColor: '#6366f1',
-                  fillOpacity: 0.2,
-                  strokeColor: '#6366f1',
-                  strokeWidth: 2,
-                  strokeStyle: 'dash',
-                  openBalloonOnClick: false,
-                  zIndex: 50,
-                }}
+                options={{ fillColor: '#6366f1', fillOpacity: 0.2, strokeColor: '#6366f1', strokeWidth: 2, strokeStyle: 'dash', openBalloonOnClick: false, zIndex: 50 }}
               />
             )}
             {polyEdit?.points.map((pt, i) => (
@@ -330,9 +306,7 @@ export default function MapPage() {
           </div>
         )}
 
-        {showLanes && (
-          <LineInformation onClose={() => setShowLanes(false)} />
-        )}
+        {showLanes && <LineInformation onClose={() => setShowLanes(false)} />}
 
         {panel?.type === 'road' && (
           <PanelRoad
@@ -348,12 +322,7 @@ export default function MapPage() {
         )}
 
         {(panel?.type === 'parking' || panel?.type === 'factory' || panel?.type === 'fleet' || panel?.type === 'vehicle') && (
-          <PanelVehicle
-            panel={panel}
-            dark={dark}
-            onClose={() => setPanel(null)}
-            onSelectVehicle={openVehicle}
-          />
+          <PanelVehicle panel={panel} dark={dark} onClose={() => setPanel(null)} onSelectVehicle={openVehicle} />
         )}
       </div>
     </div>
