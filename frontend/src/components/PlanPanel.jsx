@@ -217,8 +217,17 @@ export default function PlanPanel({ road, lane, onClose, onDone, submitting = fa
             disabled={!canSubmit}
             className="w-full py-3 rounded-xl bg-orange-500 hover:bg-orange-600 disabled:opacity-40 text-white font-bold text-sm transition-colors flex items-center justify-center gap-2"
           >
-            <span>✅</span>
-            <span>Готово — сформировать задание</span>
+            {submitting ? (
+              <>
+                <span className="animate-spin">⏳</span>
+                <span>Расчёт плана...</span>
+              </>
+            ) : (
+              <>
+                <span>✅</span>
+                <span>Начать ремонт — сформировать план</span>
+              </>
+            )}
           </button>
         </div>
       </div>
