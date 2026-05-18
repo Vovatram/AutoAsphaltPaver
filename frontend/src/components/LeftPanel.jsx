@@ -224,6 +224,37 @@ export default function LeftPanel({ dark, onToggleDark, roads, parkings, factori
 
         <div className="mx-4 border-t border-slate-700 my-1" />
 
+        {/* Factories */}
+        <div className="px-4 pt-3 pb-3">
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+            Заводы АБЗ
+          </p>
+          <div className="flex flex-col gap-1">
+            {(factories ?? []).length === 0 && (
+              <p className="text-xs text-slate-500 px-1">Загрузка...</p>
+            )}
+            {(factories ?? []).map(factory => (
+              <button
+                key={factory.id}
+                onClick={() => onSelectFactory?.(factory.id)}
+                className="text-left px-3 py-2 rounded-lg bg-slate-700 hover:bg-amber-700 text-sm transition-colors w-full flex items-center justify-between gap-2"
+              >
+                <span className="flex items-center gap-2 min-w-0">
+                  <span>🏭</span>
+                  <span className="truncate">{factory.name}</span>
+                </span>
+                {factory.vehicle_count > 0 && (
+                  <span className="text-xs text-slate-400 shrink-0 bg-slate-600 px-1.5 py-0.5 rounded">
+                    {factory.vehicle_count} ед.
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="mx-4 border-t border-slate-700 my-1" />
+
         {/* Vehicle fleet legend */}
         <div className="px-4 pt-3 pb-4">
           <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
