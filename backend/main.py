@@ -19,12 +19,7 @@ ROADS = [
         "id": 1,
         "name": "102-й километр",
         "coords": [56.390318, 36.571799],
-        "polygon": [
-            [56.386357, 36.575216],
-            [56.386231, 36.575442],
-            [56.394278, 36.568381],
-            [56.394404, 36.568155],
-        ],
+        "polygon": [[56.394373403648885,36.568309446071595],[56.39208458123231,36.57021137350003],[56.38984327766972,36.572114619301786],[56.38771867723379,36.57405653862859],[56.38619508095896,36.575472744988446],[56.386076047422534,36.57517233757876],[56.38899756556469,36.57243765114263],[56.390979272627476,36.57069957970098],[56.392531466748856,36.569406632599666],[56.39431495017981,36.567993449071366]],
         "photo": "https://cdn.discordapp.com/attachments/1440751646526275725/1505657485929873548/1.png?ex=6a0b6c4e&is=6a0a1ace&hm=c4faf58ec905e516b11a712458847082cd90775595189ed33af4d408b82b6385&",
         "lanes": [
             {"id": 1, "name": "Полоса 1", "direction": "На Москву",          "condition": "Удовлетворительное", "last_paved": "2021-03-15"},
@@ -41,12 +36,7 @@ ROADS = [
         "id": 2,
         "name": "123-й километр",
         "coords": [56.568796, 36.478926],
-        "polygon": [
-            [56.564770, 36.481135],
-            [56.564644, 36.481361],
-            [56.572822, 36.476717],
-            [56.572948, 36.476491],
-        ],
+        "polygon": [[56.572989586540466,36.47646780557132],[56.56461423631321,36.48100783583993],[56.56464681634025,36.481332383130734],[56.57304452991976,36.47681906587067]],
         "photo": "https://cdn.discordapp.com/attachments/1440751646526275725/1505657486626258974/2.png?ex=6a0b6c4e&is=6a0a1ace&hm=d150fc82667665049542710adb668b07c868fa38d10bd80b8d67b4db6b591c1d&",
         "lanes": [
             {"id": 1, "name": "Полоса 1", "direction": "На Москву",          "condition": "Хорошее",            "last_paved": "2023-06-10"},
@@ -63,12 +53,7 @@ ROADS = [
         "id": 3,
         "name": "361-й километр",
         "coords": [57.930603, 33.928645],
-        "polygon": [
-            [57.929219, 33.932381],
-            [57.929093, 33.932607],
-            [57.931987, 33.924909],
-            [57.932113, 33.924683],
-        ],
+        "polygon": [[57.92912981426721,33.93263208209205],[57.92897713856604,33.932438963043],[57.9301774330567,33.92951570679201],[57.93204937767758,33.92466205493255],[57.93220061351367,33.92492491141599],[57.93033057170833,33.92978427662804]],
         "photo": "https://cdn.discordapp.com/attachments/1440751646526275725/1505657484080320512/3.png?ex=6a0b6c4d&is=6a0a1acd&hm=116bd2091c6af1a79cf78d44278fab46f7d10166c52f9e3745b294d19d995edf&",
         "lanes": [
             {"id": 1, "name": "Полоса 1", "direction": "На Москву",          "condition": "Критическое",        "last_paved": "2015-05-22"},
@@ -85,12 +70,7 @@ ROADS = [
         "id": 4,
         "name": "302-й километр",
         "coords": [57.472149, 34.349623],
-        "polygon": [
-            [57.469799, 34.356485],
-            [57.469673, 34.356711],
-            [57.474499, 34.342760],
-            [57.474625, 34.342534],
-        ],
+        "polygon": [[57.474622918002076,34.342582025192115],[57.47346910890025,34.345686834589216],[57.472276254491454,34.349095394538224],[57.47134149909031,34.35200079980757],[57.46974030224565,34.35671075883772],[57.46952641863442,34.356592741641066],[57.47111779116366,34.35174527031947],[57.47204454674023,34.348880671091564],[57.473281713956,34.345493010004695],[57.47444485824888,34.342344703799995]],
         "photo": "https://cdn.discordapp.com/attachments/1440751646526275725/1505657484487037050/4.png?ex=6a0b6c4e&is=6a0a1ace&hm=ed6c607b2d15b126a37315e48483d469f52dd83326eb7542fb5c41e6bffb14b7&",
         "lanes": [
             {"id": 1, "name": "Полоса 1", "direction": "На Москву",          "condition": "Плохое",             "last_paved": "2020-07-18"},
@@ -107,12 +87,7 @@ ROADS = [
         "id": 5,
         "name": "151-й километр",
         "coords": [56.761401, 36.207698],
-        "polygon": [
-            [56.758565, 36.213815],
-            [56.758439, 36.214041],
-            [56.764236, 36.201581],
-            [56.764362, 36.201355],
-        ],
+        "polygon": [[56.764372260928184,36.20137469224737],[56.76311425462504,36.2040622656803],[56.762171458692414,36.20616511754797],[56.76134060007369,36.208021206186274],[56.75858269115216,36.21424400944549],[56.75842300357991,36.21400025302677],[56.761152640680834,36.20786035836518],[56.76297537590116,36.203805423919235],[56.764236332988254,36.201166130248595]],
         "photo": "https://cdn.discordapp.com/attachments/1440751646526275725/1505657484998869186/5.png?ex=6a0b6c4e&is=6a0a1ace&hm=24c58fb98cf60b66b9c8883e18497ed70592671d7b7f1df4b9f6fa673f0745ba&",
         "lanes": [
             {"id": 1, "name": "Полоса 1", "direction": "На Москву",          "condition": "Удовлетворительное", "last_paved": "2022-11-01"},
@@ -301,12 +276,60 @@ PARKINGS = [
 _ALL_VEHICLES = _VEHICLES_P1 + _VEHICLES_P2 + _VEHICLES_F1 + _VEHICLES_F3
 
 
+# ─── Helpers ──────────────────────────────────────────────────────────────────
+
+def _lerp(p1, p2, t):
+    return [p1[0] + (p2[0] - p1[0]) * t, p1[1] + (p2[1] - p1[1]) * t]
+
+
+def _compute_lane_polygons(polygon, lanes):
+    """
+    Divide a road polygon transversely into equal strips — one per lane.
+    Convention: first ceil(n/2) points form the left edge (road start→end),
+    remaining points form the right edge in reverse (road end→start).
+    Each lane strip is returned as a 4-point sub-polygon.
+    """
+    if not lanes or not polygon:
+        return []
+    n = len(polygon)
+    half = (n + 1) // 2          # ceiling → left edge point count
+    left_start  = polygon[0]
+    left_end    = polygon[half - 1]
+    right_end   = polygon[half]
+    right_start = polygon[-1]
+    n_lanes = len(lanes)
+    result = []
+    for i, lane in enumerate(lanes):
+        t1, t2 = i / n_lanes, (i + 1) / n_lanes
+        result.append({
+            "lane_id": lane["id"],
+            "polygon": [
+                _lerp(left_start, right_start, t1),
+                _lerp(left_start, right_start, t2),
+                _lerp(left_end,   right_end,   t2),
+                _lerp(left_end,   right_end,   t1),
+            ],
+        })
+    return result
+
+
 # ─── Endpoints ────────────────────────────────────────────────────────────────
 
 @app.get("/api/roads")
 def get_roads():
     print("GET /api/roads")
-    return [{"id": r["id"], "name": r["name"], "coords": r["coords"], "polygon": r["polygon"]} for r in ROADS]
+    return [
+        {
+            "id": r["id"],
+            "name": r["name"],
+            "coords": r["coords"],
+            "polygon": r["polygon"],
+            "lanes": r["lanes"],
+            "weather_windows": r.get("weather_windows", []),
+            "lane_polygons": _compute_lane_polygons(r["polygon"], r["lanes"]),
+        }
+        for r in ROADS
+    ]
 
 
 @app.get("/api/roads/{road_id}")
@@ -315,7 +338,7 @@ def get_road(road_id: int):
     road = next((r for r in ROADS if r["id"] == road_id), None)
     if not road:
         raise HTTPException(status_code=404, detail="Road not found")
-    return road
+    return {**road, "lane_polygons": _compute_lane_polygons(road["polygon"], road["lanes"])}
 
 
 @app.get("/api/factories")
