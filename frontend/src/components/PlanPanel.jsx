@@ -74,7 +74,7 @@ function VehicleSelector({ vehicleType, allVehicles, selected, onAdd, onRemove }
   );
 }
 
-export default function PlanPanel({ road, lane, onClose, onDone }) {
+export default function PlanPanel({ road, lane, onClose, onDone, submitting = false }) {
   const [loading, setLoading] = useState(true);
   const [allVehicles, setAllVehicles] = useState({});
   const [selected, setSelected] = useState({
