@@ -34,6 +34,18 @@ function PanelHeader({ title, subtitle, onClose, icon }) {
   );
 }
 
+function LocationBadge({ locationType, locationName }) {
+  if (!locationType) return null;
+  const isTransit = locationType === 'transit';
+  return (
+    <span className={`text-xs px-1.5 py-0.5 rounded font-medium shrink-0 ${
+      isTransit ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600'
+    }`}>
+      {isTransit ? 'в пути' : locationName}
+    </span>
+  );
+}
+
 function VehicleListItem({ v, onClick }) {
   return (
     <button
@@ -41,11 +53,12 @@ function VehicleListItem({ v, onClick }) {
       className="w-full text-left px-4 py-3 rounded-lg border border-gray-100 bg-gray-50 hover:bg-blue-50 hover:border-blue-200 transition-colors"
     >
       <div className="flex items-center gap-3">
-        <span className="text-2xl">{VEHICLE_ICON[v.type]}</span>
-        <div>
+        <span className="text-2xl shrink-0">{VEHICLE_ICON[v.type]}</span>
+        <div className="flex-1 min-w-0">
           <p className="text-sm font-semibold text-gray-900">{v.name}</p>
           <p className="text-xs text-gray-500">{VEHICLE_LABEL[v.type]}</p>
         </div>
+        <LocationBadge locationType={v.location_type} locationName={v.location_name} />
       </div>
     </button>
   );
@@ -57,7 +70,7 @@ function ParkingPanel({ parking, onClose, onSelectVehicle }) {
       <PanelHeader icon="🅿️" title={parking.name} subtitle="Техника на стоянке" onClose={onClose} />
       <div className="p-4">
         <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-          Выберите технику для просмотра плана
+          Выберите технику для просмотра
         </p>
         <div className="space-y-2">
           {parking.vehicles.map(v => (
@@ -74,7 +87,6 @@ function FactoryPanel({ factory, onClose, onSelectVehicle }) {
     <>
       <PanelHeader icon="🏭" title={factory.name} subtitle="Асфальтобетонный завод" onClose={onClose} />
       <div className="p-4 space-y-4">
-        {/* Factory info */}
         <div className="grid grid-cols-2 gap-2">
           <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
             <p className="text-xs text-gray-400 mb-0.5">Производительность</p>
@@ -88,7 +100,6 @@ function FactoryPanel({ factory, onClose, onSelectVehicle }) {
           </div>
         </div>
 
-        {/* Materials */}
         <div>
           <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Материалы</p>
           <div className="space-y-1">
@@ -101,7 +112,6 @@ function FactoryPanel({ factory, onClose, onSelectVehicle }) {
           </div>
         </div>
 
-        {/* Vehicles currently loading */}
         {factory.vehicles?.length > 0 && (
           <div>
             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
@@ -146,10 +156,13 @@ function FleetTypePanel({ vehicles, typeName, typeIcon, onClose, onSelectVehicle
   );
 }
 
-function VehiclePanel({ vehicle, onClose }) {
-  const date = vehicle.schedule[0]?.date ?? '';
-  const [y, m, d] = date.split('-');
+function VehiclePanel({ vehicle, onClose, onFlyTo }) {
+  const date = vehicle.schedule?.[0]?.date ?? '';
+  const [y, m, d] = date ? date.split('-') : ['', '', ''];
   const dateLabel = date ? `${d}.${m}.${y}` : '';
+
+  const isTransit = vehicle.location_type === 'transit';
+  const coords = vehicle.coords;
 
   return (
     <>
@@ -169,36 +182,88 @@ function VehiclePanel({ vehicle, onClose }) {
         </button>
       </div>
 
-      <div className="p-4">
-        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-          Маршрутный план — {dateLabel}
-        </h3>
-        <div className="overflow-x-auto rounded-lg border border-gray-100">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-gray-50 border-b border-gray-200">
-                <th className="text-left px-3 py-2 text-xs font-semibold text-gray-500 w-14">Время</th>
-                <th className="text-left px-3 py-2 text-xs font-semibold text-gray-500">Место</th>
-                <th className="text-left px-3 py-2 text-xs font-semibold text-gray-500">Задача</th>
-              </tr>
-            </thead>
-            <tbody>
-              {vehicle.schedule.map((s, i) => (
-                <tr key={i} className="border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
-                  <td className="px-3 py-2.5 font-mono text-xs font-bold text-blue-700">{s.time}</td>
-                  <td className="px-3 py-2.5 text-xs text-gray-600">{s.location}</td>
-                  <td className="px-3 py-2.5 text-xs text-gray-800">{s.task}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <div className="p-4 space-y-3">
+        {/* Status row */}
+        <div className="grid grid-cols-2 gap-2">
+          <div className={`rounded-lg p-3 border ${isTransit ? 'bg-blue-50 border-blue-100' : 'bg-gray-50 border-gray-100'}`}>
+            <p className="text-xs text-gray-400 mb-0.5">Статус</p>
+            <p className={`text-sm font-bold ${isTransit ? 'text-blue-600' : 'text-gray-700'}`}>
+              {isTransit ? 'В пути' : 'На месте'}
+            </p>
+          </div>
+          <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
+            <p className="text-xs text-gray-400 mb-0.5">Скорость</p>
+            <p className="text-sm font-bold text-gray-900">
+              {vehicle.speed_kmh ?? 0} <span className="font-normal text-gray-500 text-xs">км/ч</span>
+            </p>
+          </div>
         </div>
+
+        {/* Location */}
+        <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
+          <p className="text-xs text-gray-400 mb-1">Местоположение</p>
+          {isTransit ? (
+            coords ? (
+              <p className="text-sm font-mono text-gray-800">
+                {coords[0].toFixed(5)}, {coords[1].toFixed(5)}
+              </p>
+            ) : <p className="text-sm text-gray-500">—</p>
+          ) : (
+            <p className="text-sm font-semibold text-gray-900">{vehicle.location_name ?? '—'}</p>
+          )}
+        </div>
+
+        {/* Current task */}
+        <div className="bg-orange-50 rounded-lg p-3 border border-orange-100">
+          <p className="text-xs text-gray-400 mb-1">Текущая задача</p>
+          <p className="text-sm font-semibold text-gray-900">{vehicle.current_task ?? '—'}</p>
+        </div>
+
+        {/* Fly-to button */}
+        {coords && onFlyTo && (
+          <button
+            onClick={() => onFlyTo(coords)}
+            className="w-full py-2.5 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-bold text-sm transition-colors flex items-center justify-center gap-2"
+          >
+            <span>📍</span>
+            <span>Переместиться к технике</span>
+          </button>
+        )}
+
+        {/* Schedule table */}
+        {vehicle.schedule?.length > 0 && (
+          <>
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider pt-1">
+              Маршрутный план — {dateLabel}
+            </p>
+            <div className="overflow-x-auto rounded-lg border border-gray-100">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-gray-50 border-b border-gray-200">
+                    <th className="text-left px-3 py-2 text-xs font-semibold text-gray-500 w-14">Время</th>
+                    <th className="text-left px-3 py-2 text-xs font-semibold text-gray-500">Место</th>
+                    <th className="text-left px-3 py-2 text-xs font-semibold text-gray-500">Задача</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {vehicle.schedule.map((s, i) => (
+                    <tr key={i} className="border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
+                      <td className="px-3 py-2.5 font-mono text-xs font-bold text-blue-700">{s.time}</td>
+                      <td className="px-3 py-2.5 text-xs text-gray-600">{s.location}</td>
+                      <td className="px-3 py-2.5 text-xs text-gray-800">{s.task}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
       </div>
     </>
   );
 }
 
-export default function PanelVehicle({ panel, onClose, onSelectVehicle }) {
+export default function PanelVehicle({ panel, onClose, onSelectVehicle, onFlyToVehicle }) {
   return (
     <div className="absolute top-0 right-0 h-full w-96 bg-white shadow-2xl overflow-y-auto z-10 flex flex-col">
       {panel.type === 'parking' && (
@@ -217,7 +282,7 @@ export default function PanelVehicle({ panel, onClose, onSelectVehicle }) {
         />
       )}
       {panel.type === 'vehicle' && (
-        <VehiclePanel vehicle={panel.data} onClose={onClose} />
+        <VehiclePanel vehicle={panel.data} onClose={onClose} onFlyTo={onFlyToVehicle} />
       )}
     </div>
   );
