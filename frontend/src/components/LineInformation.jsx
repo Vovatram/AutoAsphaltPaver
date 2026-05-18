@@ -256,9 +256,11 @@ export default function LineInformation({ onClose }) {
           road={planTarget.road}
           lane={planTarget.lane}
           onClose={() => setPlanTarget(null)}
-          onDone={() => { setPlanTarget(null); onClose(); }}
+          onDone={() => { setPlanTarget(null); setShowAnim(true); }}
         />
       )}
+
+      {showAnim && <RepairAnimation onClose={() => { setShowAnim(false); onClose(); }} />}
     </div>
   );
 }
