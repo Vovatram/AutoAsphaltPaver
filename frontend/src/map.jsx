@@ -181,11 +181,13 @@ export default function MapPage() {
       axios.get(`${API}/factories`),
       axios.get(`${API}/parkings`),
       axios.get(`${API}/vehicles`),
-    ]).then(([r, f, p, v]) => {
+      axios.get(`${API}/tasks`),
+    ]).then(([r, f, p, v, t]) => {
       setRoads(r.data);
       setFactories(f.data);
       setParkings(p.data);
       setVehicles(v.data);
+      setTasks(t.data);
       const counts = {};
       v.data.forEach(vh => { counts[vh.type] = (counts[vh.type] || 0) + 1; });
       setVehicleCounts(counts);
