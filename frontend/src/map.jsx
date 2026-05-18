@@ -127,6 +127,38 @@ function EditDotMarker({ point, index }) {
   );
 }
 
+function VehicleMarker({ vehicle, onClick }) {
+  const ymaps = useYMaps(['templateLayoutFactory']);
+  const icon = VEHICLE_ICON[vehicle.type] ?? '🚗';
+  const layout = useMemo(() => {
+    if (!ymaps?.templateLayoutFactory) return null;
+    const speedBadge = vehicle.speed_kmh > 0
+      ? `<div style="position:absolute;top:-6px;right:-8px;background:#2563eb;color:#fff;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 3px;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.3)">${vehicle.speed_kmh}</div>`
+      : '';
+    return ymaps.templateLayoutFactory.createClass(
+      `<div style="position:relative;display:inline-block;text-align:center;transform:translate(-50%,-100%);cursor:pointer">` +
+        `<div style="font-size:26px;line-height:1;filter:drop-shadow(0 1px 3px rgba(0,0,0,.4))">${icon}</div>` +
+        speedBadge +
+        `<div style="margin-top:2px;background:rgba(30,30,30,.85);color:#fff;font-size:9px;font-weight:600;padding:1px 5px;border-radius:4px;white-space:nowrap;max-width:130px;overflow:hidden;text-overflow:ellipsis;box-shadow:0 1px 3px rgba(0,0,0,.3)">${vehicle.name}</div>` +
+      `</div>`
+    );
+  }, [ymaps, vehicle.type, vehicle.name, vehicle.speed_kmh]);
+  if (!layout) return null;
+  return (
+    <Placemark
+      geometry={vehicle.coords}
+      options={{
+        iconLayout: layout,
+        iconShape: { type: 'Rectangle', coordinates: [[-65, -60], [65, 8]] },
+        openBalloonOnClick: false,
+        zIndex: 30,
+      }}
+      properties={{ hintContent: `${icon} ${vehicle.name} — ${vehicle.current_task}` }}
+      onClick={onClick}
+    />
+  );
+}
+
 export default function MapPage() {
   const mapRef = useRef(null);
   const [dark, setDark] = useState(false);
