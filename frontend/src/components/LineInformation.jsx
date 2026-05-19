@@ -254,7 +254,11 @@ export default function LineInformation({ onClose, onRepairStart }) {
           road={planTarget.road}
           lane={planTarget.lane}
           onClose={() => setPlanTarget(null)}
-          onDone={() => { setPlanTarget(null); setShowAnim(true); }}
+          onDone={() => {
+            const { road, lane } = planTarget;
+            setPlanTarget(null);
+            onRepairStart?.(road.id, lane.id);
+          }}
         />
       )}
 
