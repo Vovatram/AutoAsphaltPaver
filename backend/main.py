@@ -1,7 +1,9 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from road_repair_system import plan_repair, check_repair
+import asyncio
+from repair_sim import start_sim
 
 app = FastAPI(title="AutoAsphaltPaver API")
 
