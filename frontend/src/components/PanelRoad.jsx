@@ -14,10 +14,9 @@ function pluralDays(n) {
   return 'дней';
 }
 
-export default function PanelRoad({ road, dark, onClose, polyEdit, onStartPolyEdit, onUndoPolyEdit, onFinishPolyEdit, onCancelPolyEdit, onRepairStarted }) {
+export default function PanelRoad({ road, dark, onClose, polyEdit, onStartPolyEdit, onUndoPolyEdit, onFinishPolyEdit, onCancelPolyEdit, onRepairStart }) {
   const [selectedLane, setSelectedLane] = useState(null);
   const [showPlan, setShowPlan] = useState(false);
-  const [showAnim, setShowAnim] = useState(false);
 
   const days = Math.ceil(road.repair_hours / 24);
 
@@ -25,10 +24,11 @@ export default function PanelRoad({ road, dark, onClose, polyEdit, onStartPolyEd
 
   const handleDone = async (plan) => {
     setPlanning(true);
+    const laneId = selectedLane.id;   // capture before clear
     try {
       await axios.post(`${API}/repair/plan`, {
         road_id: road.id,
-        lane_id: selectedLane.id,
+        lane_id: laneId,
         window:  plan.window ?? '',
       });
     } catch (e) {
@@ -38,8 +38,7 @@ export default function PanelRoad({ road, dark, onClose, polyEdit, onStartPolyEd
     }
     setShowPlan(false);
     setSelectedLane(null);
-    setShowAnim(true);
-    onRepairStarted?.();
+    onRepairStart?.(road.id, laneId);
   };
 
   return (
