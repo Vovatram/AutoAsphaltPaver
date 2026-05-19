@@ -712,3 +712,28 @@ def register(body: dict):
 @app.post("/api/auth/login")
 def login(body: dict):
     return {"ok": True, "message": "Вход выполнен"}
+
+
+@app.websocket("/ws/repair/{road_id}/{lane_id}")
+async def ws_repair(websocket: WebSocket, road_id: int, lane_id: int):
+    await websocket.accept()
+    road = next((r for r in ROADS if r["id"] == road_id), None)
+    if not road:
+        await websocket.close(1008); return
+    lane_idx = next((i for i, l in enumerate(road["lanes"]) if l["id"] == lane_id), None)
+    if lane_idx is None:
+        await websocket.close(1008); return
+    n_lanes = len(road["lanes"])
+    sim = start_sim(road_id, lane_id, road["polygon"], lane_idx, n_lanes)
+    DT = 0.5
+    try:
+        while True:
+            sim.update(DT)
+            state = sim.get_state()
+            await websocket.send_json({"type": "positions", **state})
+            if state["done"]:
+                break
+            await asyncio.sleep(DT)
+        await websocket.send_json({"type": "done"})
+    except (WebSocketDisconnect, Exception):
+        pass
