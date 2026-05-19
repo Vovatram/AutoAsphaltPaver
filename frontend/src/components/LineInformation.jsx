@@ -262,7 +262,6 @@ export default function LineInformation({ onClose, onRepairStart }) {
         />
       )}
 
-      {showAnim && <RepairAnimation onClose={() => { setShowAnim(false); onClose(); }} />}
     </div>
   );
 }
