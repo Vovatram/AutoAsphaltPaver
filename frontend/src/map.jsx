@@ -177,6 +177,13 @@ export default function MapPage() {
   const [taskView, setTaskView] = useState(null); // null | 'list' | task-object
   const [polyEdit, setPolyEdit] = useState(null);
 
+  const { simVehicles, simProgress, simActive, simDone, startSim, stopSim } = useRepairSim();
+
+  const handleRepairStart = (roadId, laneId) => {
+    flyToRoad(roadId);
+    startSim(roadId, laneId);
+  };
+
   useEffect(() => {
     Promise.all([
       axios.get(`${API}/roads`),
