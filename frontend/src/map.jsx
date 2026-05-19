@@ -367,6 +367,11 @@ export default function MapPage() {
               />
             ))}
 
+            {/* Repair simulation vehicles */}
+            {simActive && simVehicles.map(v => (
+              <RepairVehicleMarker key={v.id} vehicle={v} />
+            ))}
+
             {/* Polygon editor preview */}
             {polyEdit?.points.length >= 3 && (
               <Polygon
