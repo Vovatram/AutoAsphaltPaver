@@ -3,7 +3,6 @@ import axios from 'axios';
 import LinePanel from './LinePanel.jsx';
 import PlanPanel from './PlanPanel.jsx';
 import RoadScheme from './RoadScheme.jsx';
-import RepairAnimation from './RepairAnimation.jsx';
 
 const API = 'http://localhost:8000/api';
 
