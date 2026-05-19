@@ -401,6 +401,7 @@ export default function MapPage() {
             onUndoPolyEdit={undoPolyEdit}
             onFinishPolyEdit={finishPolyEdit}
             onCancelPolyEdit={cancelPolyEdit}
+            onRepairStart={handleRepairStart}
           />
         )}
 
