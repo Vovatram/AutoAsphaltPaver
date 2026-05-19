@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import PlanPanel from './PlanPanel.jsx';
-import RepairAnimation from './RepairAnimation.jsx';
 
 const API = 'http://localhost:8000/api';
 
