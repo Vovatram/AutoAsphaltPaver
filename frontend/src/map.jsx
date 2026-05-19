@@ -385,6 +385,29 @@ export default function MapPage() {
           </Map>
         </YMaps>
 
+        {/* Repair progress bar */}
+        {simActive && (
+          <div style={{
+            position: 'absolute', bottom: 24, left: '50%', transform: 'translateX(-50%)',
+            background: 'rgba(15,15,15,.88)', color: 'white', borderRadius: 12,
+            padding: '10px 18px', zIndex: 30, display: 'flex', alignItems: 'center', gap: 12,
+            boxShadow: '0 4px 16px rgba(0,0,0,.4)', backdropFilter: 'blur(6px)',
+            pointerEvents: 'auto',
+          }}>
+            <span style={{ fontSize: 13, fontWeight: 600 }}>🚧 Ремонт</span>
+            <div style={{ width: 140, height: 6, background: '#333', borderRadius: 3, overflow: 'hidden' }}>
+              <div style={{ width: `${Math.round(simProgress * 100)}%`, height: '100%', background: simDone ? '#22c55e' : '#f97316', transition: 'width .5s linear', borderRadius: 3 }} />
+            </div>
+            <span style={{ fontSize: 11, color: '#aaa', minWidth: 32 }}>{Math.round(simProgress * 100)}%</span>
+            <button
+              onClick={stopSim}
+              style={{ background: '#1f2937', border: '1px solid #374151', color: '#9ca3af', borderRadius: 6, padding: '3px 10px', cursor: 'pointer', fontSize: 11, fontWeight: 600 }}
+            >
+              Стоп
+            </button>
+          </div>
+        )}
+
         {/* Edit mode banner */}
         {polyEdit && (
           <div className="absolute top-3 left-1/2 -translate-x-1/2 z-20 bg-indigo-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg pointer-events-none flex items-center gap-2 whitespace-nowrap">
