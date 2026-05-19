@@ -389,7 +389,7 @@ export default function MapPage() {
           </div>
         )}
 
-        {showLanes && <LineInformation onClose={() => setShowLanes(false)} />}
+        {showLanes && <LineInformation onClose={() => setShowLanes(false)} onRepairStart={handleRepairStart} />}
 
         {panel?.type === 'road' && (
           <PanelRoad
