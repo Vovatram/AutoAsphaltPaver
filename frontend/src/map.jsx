@@ -179,11 +179,6 @@ export default function MapPage() {
 
   const { simVehicles, simProgress, simActive, simDone, startSim, stopSim } = useRepairSim();
 
-  const handleRepairStart = (roadId, laneId) => {
-    flyToRoad(roadId);
-    startSim(roadId, laneId);
-  };
-
   useEffect(() => {
     Promise.all([
       axios.get(`${API}/roads`),
