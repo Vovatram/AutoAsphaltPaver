@@ -7,6 +7,8 @@ import PanelVehicle, { VEHICLE_ICON } from './components/PanelVehicle.jsx';
 import LineInformation from './components/LineInformation.jsx';
 import TaskPanel from './components/TaskPanel.jsx';
 import TaskLine from './components/TaskLine.jsx';
+import useRepairSim from './hooks/useRepairSim.js';
+import RepairVehicleMarker from './components/RepairVehicleMarker.jsx';
 
 const API = 'http://localhost:8000/api';
 const MAP_CENTER = [57.0, 35.5];
