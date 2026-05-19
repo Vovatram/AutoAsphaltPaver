@@ -203,7 +203,6 @@ export default function PanelRoad({ road, dark, onClose, polyEdit, onStartPolyEd
         />
       )}
 
-      {showAnim && <RepairAnimation onClose={() => setShowAnim(false)} />}
     </div>
   );
 }
