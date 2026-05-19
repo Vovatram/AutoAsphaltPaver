@@ -224,6 +224,11 @@ export default function MapPage() {
     if (road && mapRef.current) mapRef.current.setCenter(road.coords, 14, { duration: 600, checkZoomRange: true });
   };
 
+  const handleRepairStart = (roadId, laneId) => {
+    flyToRoad(roadId);
+    startSim(roadId, laneId);
+  };
+
   const openRoad = async (id) => {
     flyToRoad(id);
     const { data } = await axios.get(`${API}/roads/${id}`);
